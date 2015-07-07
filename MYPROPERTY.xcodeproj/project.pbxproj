@@ -50,6 +50,7 @@
 		8FC3F0141B4ACA1D00488D64 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC3F0111B4ACA1D00488D64 /* LoginViewController.m */; };
 		8FC3F0151B4ACA1D00488D64 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC3F0131B4ACA1D00488D64 /* SignupViewController.m */; };
 		8FC3F01A1B4ACA9C00488D64 /* FW_JsonClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC3F0171B4ACA9C00488D64 /* FW_JsonClass.m */; };
+		965FA95A1B4B919D00C5440F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 965FA9591B4B919D00C5440F /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +134,7 @@
 		8FC3F0171B4ACA9C00488D64 /* FW_JsonClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FW_JsonClass.m; sourceTree = "<group>"; };
 		8FC3F0181B4ACA9C00488D64 /* RS_ios_customBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RS_ios_customBlock.h; sourceTree = "<group>"; };
 		8FC3F0191B4ACA9C00488D64 /* RS_PCH.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RS_PCH.pch; sourceTree = "<group>"; };
+		965FA9591B4B919D00C5440F /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F7D06191B46CBB6002134AB /* MapKit.framework in Frameworks */,
+				965FA95A1B4B919D00C5440F /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +160,7 @@
 		8F7D05A71B4670AB002134AB = {
 			isa = PBXGroup;
 			children = (
+				965FA9591B4B919D00C5440F /* FacebookSDK.framework */,
 				8F7D06181B46CBB6002134AB /* MapKit.framework */,
 				8F7D05B21B4670AC002134AB /* MYPROPERTY */,
 				8F7D05CF1B4670AC002134AB /* MYPROPERTYTests */,
@@ -563,6 +567,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MYPROPERTY/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -574,6 +582,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MYPROPERTY/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
