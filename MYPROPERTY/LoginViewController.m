@@ -10,6 +10,10 @@
 
 @interface LoginViewController ()
 
+@property (strong, nonatomic) IBOutlet UIButton *loginbtn;
+@property (strong, nonatomic) IBOutlet UIButton *forgotpwdbtn;
+@property (strong, nonatomic) IBOutlet UIButton *signupbtn;
+@property (strong, nonatomic) IBOutlet UILabel *acclbl;
 @end
 
 @implementation LoginViewController
@@ -17,6 +21,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    if (self.view.frame.size.width == 375 || self.view.frame.size.width ==)
 }
 
 - (void)didReceiveMemoryWarning {
