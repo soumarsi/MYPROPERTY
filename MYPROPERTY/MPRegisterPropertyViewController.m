@@ -20,6 +20,24 @@
     // Do any additional setup after loading the view.
     [_mainscroll setContentSize:CGSizeMake(self.view.frame.size.width, 800)];
     _mainscroll.showsVerticalScrollIndicator = YES;
+
+//    myPickerView = [[UIPickerView alloc] init];
+//    myPickerView.frame = CGRectMake(0, 638, 162,320);
+    //myPickerView.tag = i;
+//    myPickerView.delegate = self;
+//    myPickerView.showsSelectionIndicator = YES;
+    Array_1 = [[NSMutableArray alloc] init];
+    
+    // Add some data for demo purposes.
+    [Array_1 addObject:@"One"];
+    [Array_1 addObject:@"Two"];
+    [Array_1 addObject:@"Three"];
+    [Array_1 addObject:@"Four"];
+    [Array_1 addObject:@"Five"];
+    [Array_1 addObject:@"Six"];
+
+
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,5 +54,13 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (IBAction)btn1:(id)sender {
+    
+}
+
+
+
+//picker View delegate and data source 
 
 @end

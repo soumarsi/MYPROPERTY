@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MPRegisterPropertyViewController : UIViewController
+@interface MPRegisterPropertyViewController : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate>
+{
+   IBOutlet  UIPickerView *myPickerView;
+    IBOutlet UILabel *relationProperty;
+    NSMutableArray *Array_1;
+}
+- (IBAction)btn1:(id)sender;
 
 @end

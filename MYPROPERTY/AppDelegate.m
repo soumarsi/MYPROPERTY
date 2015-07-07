@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,8 +18,70 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    //    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    //    NSObject * object = [prefs objectForKey:@"username"];
+    //    if(object != nil)
+    //    {
+    //        UIStoryboard *storyboard = self.window.rootViewController.storyboard;
+    //        UIViewController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"searchView"];
+    //        self.window.rootViewController = rootViewController;
+    //        [self.window makeKeyAndVisible];
+    //        NSLog(@"%@",object);
+    //
+    //    }
+    if ([FBSession activeSession].state == FBSessionStateCreatedTokenLoaded)
+    {
+        [self openActiveSessionWithPermissions:nil allowLoginUI:NO];
+        UIStoryboard *storyboard = self.window.rootViewController.storyboard;
+        UIViewController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"searchView"];
+        self.window.rootViewController = rootViewController;
+        [self.window makeKeyAndVisible];
+        
+    }
+    
+    
+//    if ([[Twitter sharedInstance] session])
+//    {
+//        
+//        UIStoryboard *storyboard = self.window.rootViewController.storyboard;
+//        UIViewController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"searchView"];
+//        self.window.rootViewController = rootViewController;
+//        [self.window makeKeyAndVisible];
+//        
+//    } else
+//    {
+//        [Fabric with:@[TwitterKit]];
+//    }
+    
     return YES;
 }
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+}
+
+-(void)openActiveSessionWithPermissions:(NSArray *)permissions allowLoginUI:(BOOL)allowLoginUI{
+    [FBSession openActiveSessionWithReadPermissions:permissions
+                                       allowLoginUI:allowLoginUI
+                                  completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                      
+                                      // Create a NSDictionary object and set the parameter values.
+                                      NSDictionary *sessionStateInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                                        session, @"session",
+                                                                        [NSNumber numberWithInteger:status], @"state",
+                                                                        error, @"error",
+                                                                        nil];
+                                      
+                                      // Create a new notification, add the sessionStateInfo dictionary to it and post it.
+                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionStateChangeNotification"
+                                                                                          object:nil
+                                                                                        userInfo:sessionStateInfo];
+                                      
+                                  }];
+}
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -36,6 +99,18 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    if ([FBSession activeSession].state == FBSessionStateCreatedTokenLoaded)
+    {
+        [self openActiveSessionWithPermissions:nil allowLoginUI:NO];
+        
+        
+        
+    }
+    
+    [FBAppCall handleDidBecomeActive];
+    
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
