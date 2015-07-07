@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import <FacebookSDK/FacebookSDK.h>
+//#import <Fabric/Fabric.h>
+//#import <TwitterKit/TwitterKit.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -19,6 +22,8 @@
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
+-(void)openActiveSessionWithPermissions:(NSArray *)permissions allowLoginUI:(BOOL)allowLoginUI;
+
 
 
 @end

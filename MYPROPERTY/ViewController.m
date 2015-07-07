@@ -7,9 +7,13 @@
 //
 
 #import "ViewController.h"
+#import "AppDelegate.h"
 #import "SearchViewController.h"
 
-@interface ViewController ()
+@interface ViewController (){
+    UIView *polygonView;
+}
+@property (nonatomic, strong) AppDelegate *appDelegate;
 
 @end
 
@@ -17,9 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navigationController.navigationBarHidden = YES;
-    
+    defaults=[[NSUserDefaults alloc]init];
     CGRect screenBounds=[[UIScreen mainScreen] bounds];
     if(screenBounds.size.height == 667 && screenBounds.size.width == 375)
     {
@@ -27,7 +29,7 @@
         _label1.frame = CGRectMake(110, 245, 108, 18);
         [_label1 setFont: [UIFont fontWithName:@"Helvetica Bold" size:17.0]];
         _label2.frame = CGRectMake(214, 245, 108, 18);
-         [_label2 setFont: [UIFont fontWithName:@"Helvetica" size:17.0]];
+        [_label2 setFont: [UIFont fontWithName:@"Helvetica" size:17.0]];
         _label3.frame =CGRectMake(68, 265, 265, 18);
         [_label3 setFont: [UIFont fontWithName:@"Helvetica" size:18.0]];
         _labellogin.frame=CGRectMake(101, 550, 170, 18);
@@ -46,12 +48,116 @@
         [_labellogin setFont: [UIFont fontWithName:@"Helvetica Bold" size:14.0]];
         
     }
+    NSString *Value = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+    NSLog(@"%@",Value);
+    
+    
+    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleFBSessionStateChangeWithNotification:) name:@"SessionStateChangeNotification" object:nil];
+    
+    //    TWTRLogInButton *logInButton = [TWTRLogInButton buttonWithLogInCompletion:^(TWTRSession *session, NSError *error) {
+    //        // play with Twitter session
+    //    }];
+    //    logInButton.center = self.view.center;
+    //    [self.view addSubview:logInButton];
+    
 }
+
+-(void)handleFBSessionStateChangeWithNotification:(NSNotification *)notification{
+    // Get the session, state and error values from the notification's userInfo dictionary.
+    polygonView = [[UIView alloc] initWithFrame: CGRectMake ( 0, 0, self.view.bounds.size.width,self.view.bounds.size.height )];
+    polygonView.backgroundColor=[UIColor blackColor];
+    polygonView.alpha=0.3;
+    [self.view addSubview:polygonView];
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    spinner.frame = CGRectMake(round((self.view.frame.size.width - 25) / 2), round((self.view.frame.size.height - 25) / 2), 25, 25);
+    
+    [polygonView addSubview:spinner];
+    
+    NSDictionary *userInfo = [notification userInfo];
+    
+    [spinner startAnimating];
+    FBSessionState sessionState = [[userInfo objectForKey:@"state"] integerValue];
+    NSError *error = [userInfo objectForKey:@"error"];
+    NSLog(@"session %lu",(unsigned long)sessionState);
+    // Handle the session state.
+    // Usually, the only interesting states are the opened session, the closed session and the failed login.
+    if (!error) {
+        // In case that there's not any error, then check if the session opened or closed.
+        if (sessionState == FBSessionStateOpen) {
+            // The session is open. Get the user information and update the UI.
+            [FBRequestConnection startWithGraphPath:@"me"
+                                         parameters:@{@"fields": @"first_name, last_name, picture.type(normal), email"}
+                                         HTTPMethod:@"GET"
+                                  completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                                      if (!error) {
+                                          // Set the use full name.
+                                          NSLog(@"user name-%@",[NSString stringWithFormat:@"%@ %@",
+                                                                 [result objectForKey:@"first_name"],
+                                                                 [result objectForKey:@"last_name"]
+                                                                 ]);
+                                          NSString *name=[NSString stringWithFormat:@"%@ %@",
+                                                          [result objectForKey:@"first_name"],
+                                                          [result objectForKey:@"last_name"]
+                                                          ];
+                                          NSLog(@"username%@",name);
+                                          [defaults setValue:name forKey:@"username"];
+                                          [defaults setValue:[result objectForKey:@"email"] forKey:@"email"];
+                                          [defaults synchronize];
+                                          
+                                          // Set the e-mail address.
+                                          //self.lblEmail.text = [result objectForKey:@"email"];
+                                          
+                                          // Get the user's profile picture.
+                                          //                                          NSURL *pictureURL = [NSURL URLWithString:[[[result objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
+                                          //                                          self.imgProfilePicture.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:pictureURL]];
+                                          //                                          arry=result;
+                                          //
+                                          NSLog(@" ARRY %@",result);
+                                          
+                                          // Make the user info visible.
+                                          [spinner stopAnimating];
+                                          [spinner removeFromSuperview];
+                                          [polygonView removeFromSuperview];
+                                          SearchViewController *home=(SearchViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:Nil]instantiateViewControllerWithIdentifier:@"searchView"];
+                                          [self.navigationController pushViewController:home animated:YES];
+                                          // Stop the activity indicator from animating and hide the status label.
+                                      }
+                                      else{
+                                          [spinner stopAnimating];
+                                          [spinner removeFromSuperview];
+                                          [polygonView removeFromSuperview];
+                                          NSLog(@"%@", [error localizedDescription]);
+                                      }
+                                  }];
+            
+            
+        }
+        else if (sessionState == FBSessionStateClosed || sessionState == FBSessionStateClosedLoginFailed){
+            // A session was closed or the login was failed. Update the UI accordingly.
+            [spinner stopAnimating];
+            [spinner removeFromSuperview];
+            [polygonView removeFromSuperview];
+            NSLog(@"login again");
+        }
+    }
+    else{
+        // In case an error has occurred, then just log the error and update the UI accordingly.
+        [spinner stopAnimating];
+        [spinner removeFromSuperview];
+        [polygonView removeFromSuperview];
+        NSLog(@"Error: %@", [error localizedDescription]);
+        
+    }
+}
+
+
+
 
 - (IBAction)loginTapped:(id)sender {
     
-    SearchViewController *search = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"searchView"];
-    [self.navigationController pushViewController:search animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,4 +165,50 @@
     
 }
 
+- (IBAction)fbloginbutton:(id)sender
+{
+    if ([FBSession activeSession].state != FBSessionStateOpen &&
+        [FBSession activeSession].state != FBSessionStateOpenTokenExtended) {
+        
+        [self.appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"email"] allowLoginUI:YES];
+        
+        
+    }
+    else{
+        // Close an existing session.
+        [[FBSession activeSession] closeAndClearTokenInformation];
+        
+        // Update the UI.
+        NSLog(@"close of existing session");
+    }
+}
+
+//- (IBAction)twitterloginbutton:(id)sender
+//{
+//    polygonView = [[UIView alloc] initWithFrame: CGRectMake ( 0, 0, self.view.bounds.size.width,self.view.bounds.size.height )];
+//    polygonView.backgroundColor=[UIColor blackColor];
+//    polygonView.alpha=0.3;
+//    [self.view addSubview:polygonView];
+//    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//    spinner.frame = CGRectMake(round((self.view.frame.size.width - 25) / 2), round((self.view.frame.size.height - 25) / 2), 25, 25);
+//    
+//    [polygonView addSubview:spinner];
+//    [spinner startAnimating];
+//    [[Twitter sharedInstance] logInWithCompletion:^
+//     (TWTRSession *session, NSError *error) {
+//         if (session) {
+//             NSLog(@"signed in as %@", [session userName]);
+//             [spinner stopAnimating];
+//             [spinner removeFromSuperview];
+//             [polygonView removeFromSuperview];
+//             SearchViewController *home=(SearchViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:Nil]instantiateViewControllerWithIdentifier:@"searchView"];
+//             [self.navigationController pushViewController:home animated:YES];
+//         } else {
+//             [spinner stopAnimating];
+//             [spinner removeFromSuperview];
+//             [polygonView removeFromSuperview];
+//             NSLog(@"error: %@", [error localizedDescription]);
+//         }
+//     }];
+//}
 @end
