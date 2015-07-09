@@ -25,6 +25,6 @@
 -(void)openActiveSessionWithPermissions:(NSArray *)permissions allowLoginUI:(BOOL)allowLoginUI;
 
 
-
+@property (strong, nonatomic) UINavigationController *navigationController;
 @end
 

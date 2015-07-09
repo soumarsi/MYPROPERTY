@@ -10,6 +10,9 @@
 #import "ViewController.h"
 
 @interface AppDelegate ()
+{
+    UINavigationController *navigationController;
+}
 
 @end
 
@@ -34,25 +37,41 @@
     {
         [self openActiveSessionWithPermissions:nil allowLoginUI:NO];
         UIStoryboard *storyboard = self.window.rootViewController.storyboard;
-        UIViewController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"searchView"];
-        self.window.rootViewController = rootViewController;
+        UIViewController *rootController = [storyboard instantiateViewControllerWithIdentifier:@"searchView"];
+        
+        navigationController = [[UINavigationController alloc]
+                                initWithRootViewController:rootController];
+        [navigationController setNavigationBarHidden:YES animated:NO];
+        
+        self.window = [[UIWindow alloc]
+                       initWithFrame:[[UIScreen mainScreen] bounds]];
+        self.window.rootViewController=rootController;
+        [self.window addSubview:navigationController.view];
+        
         [self.window makeKeyAndVisible];
+        //return YES;
+        
+        /*
+         self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+         [self.window makeKeyAndVisible];
+         
+         */
         
     }
     
     
-//    if ([[Twitter sharedInstance] session])
-//    {
-//        
-//        UIStoryboard *storyboard = self.window.rootViewController.storyboard;
-//        UIViewController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"searchView"];
-//        self.window.rootViewController = rootViewController;
-//        [self.window makeKeyAndVisible];
-//        
-//    } else
-//    {
-//        [Fabric with:@[TwitterKit]];
-//    }
+    //    if ([[Twitter sharedInstance] session])
+    //    {
+    //
+    //        UIStoryboard *storyboard = self.window.rootViewController.storyboard;
+    //        UIViewController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"searchView"];
+    //        self.window.rootViewController = rootViewController;
+    //        [self.window makeKeyAndVisible];
+    //
+    //    } else
+    //    {
+    //        [Fabric with:@[TwitterKit]];
+    //    }
     
     return YES;
 }

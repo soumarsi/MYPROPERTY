@@ -9,9 +9,12 @@
 #import "ViewController.h"
 #import "AppDelegate.h"
 #import "SearchViewController.h"
+#import "LoginViewController.h"
+#import "SignupViewController.h"
 
 @interface ViewController (){
     UIView *polygonView;
+    NSMutableArray *Arry1;
 }
 @property (nonatomic, strong) AppDelegate *appDelegate;
 
@@ -21,6 +24,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    username=[[NSString alloc]init];
+    mailid=[[NSString alloc]init];
+    date=[[NSString alloc]init];
+    nicename=[[NSString alloc]init];
+    displayname=[[NSString alloc]init];
+    fullname=[[NSString alloc]init];
+    obj = [[FW_JsonClass alloc]init];
+    Arry1=[[NSMutableArray alloc]init];
     defaults=[[NSUserDefaults alloc]init];
     CGRect screenBounds=[[UIScreen mainScreen] bounds];
     if(screenBounds.size.height == 667 && screenBounds.size.width == 375)
@@ -97,31 +108,76 @@
                                                                  [result objectForKey:@"first_name"],
                                                                  [result objectForKey:@"last_name"]
                                                                  ]);
-                                          NSString *name=[NSString stringWithFormat:@"%@ %@",
-                                                          [result objectForKey:@"first_name"],
-                                                          [result objectForKey:@"last_name"]
-                                                          ];
-                                          NSLog(@"username%@",name);
-                                          [defaults setValue:name forKey:@"username"];
+                                          fullname=[NSString stringWithFormat:@"%@%@",
+                                                    [result objectForKey:@"first_name"],[result objectForKey:@"last_name"]
+                                                    ];
+                                          username=fullname;
+                                          displayname=username;
+                                          nicename=username;
+                                          mailid=[NSString stringWithFormat:@"%@",
+                                                  [result objectForKey:@"email"]
+                                                  ];
+                                          
+                                          [defaults setValue:username forKey:@"username"];
                                           [defaults setValue:[result objectForKey:@"email"] forKey:@"email"];
                                           [defaults synchronize];
                                           
-                                          // Set the e-mail address.
-                                          //self.lblEmail.text = [result objectForKey:@"email"];
-                                          
-                                          // Get the user's profile picture.
-                                          //                                          NSURL *pictureURL = [NSURL URLWithString:[[[result objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
-                                          //                                          self.imgProfilePicture.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:pictureURL]];
-                                          //                                          arry=result;
-                                          //
                                           NSLog(@" ARRY %@",result);
                                           
+                                          
+                                          NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
+                                          
+                                          NSInteger day = [components day];
+                                          NSInteger week = [components month];
+                                          NSInteger year = [components year];
+                                          
+                                          NSString *string = [NSString stringWithFormat:@"%ld.%ld.%ld",(long)year, (long)week, (long)day];
+                                          NSLog(@"st%@",string);
+                                          
                                           // Make the user info visible.
-                                          [spinner stopAnimating];
-                                          [spinner removeFromSuperview];
-                                          [polygonView removeFromSuperview];
-                                          SearchViewController *home=(SearchViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:Nil]instantiateViewControllerWithIdentifier:@"searchView"];
-                                          [self.navigationController pushViewController:home animated:YES];
+                                          
+                                          
+                                          
+                                          
+                                          NSString *url = [NSString stringWithFormat:@"%@json_output.php?mode=login_via_facebook&user_login=%@&user_nicename=%@&user_email=%@&user_registered=%@&display_name=%@",App_Domain_Url,username,nicename,mailid,string,displayname];
+                                          
+                                          [obj GlobalDict:url Globalstr:@"array" Withblock:^(id result, NSError *error)
+                                           {
+                                               
+                                               Arry1 =[[NSMutableArray alloc]init];
+                                               
+                                               
+                                               Arry1=[result mutableCopy];
+                                               
+                                               if ([[Arry1 valueForKey:@"message"]isEqualToString:@"successfully logged in"]) {
+                                                   
+                                                   [spinner stopAnimating];
+                                                   [spinner removeFromSuperview];
+                                                   [polygonView removeFromSuperview];
+                                                   SearchViewController *home=(SearchViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:Nil]instantiateViewControllerWithIdentifier:@"searchView"];
+                                                   [self.navigationController pushViewController:home animated:YES];
+                                                   
+                                               }
+                                               else
+                                               {
+                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Faild"
+                                                                                                   message:[Arry1 valueForKey:@"message"]
+                                                                                                  delegate:self
+                                                                                         cancelButtonTitle:@"Cancel"
+                                                                                         otherButtonTitles:nil,nil];
+                                                   [alert show];
+                                               }
+                                               
+                                               
+                                               NSLog(@"Arry1%@",Arry1);
+                                               
+                                               
+                                           }];
+                                          
+                                          
+                                          
+                                          
+                                          
                                           // Stop the activity indicator from animating and hide the status label.
                                       }
                                       else{
@@ -191,7 +247,7 @@
 //    [self.view addSubview:polygonView];
 //    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 //    spinner.frame = CGRectMake(round((self.view.frame.size.width - 25) / 2), round((self.view.frame.size.height - 25) / 2), 25, 25);
-//    
+//
 //    [polygonView addSubview:spinner];
 //    [spinner startAnimating];
 //    [[Twitter sharedInstance] logInWithCompletion:^
@@ -211,4 +267,31 @@
 //         }
 //     }];
 //}
+- (IBAction)loginbutton:(id)sender
+{
+    LoginViewController *loginpg=(LoginViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:Nil]instantiateViewControllerWithIdentifier:@"login"];
+    //                 //[self.navigationController pushViewController:loginpg animated:YES];
+    [UIView  beginAnimations: @"Showinfo"context: nil];
+    [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.75];
+    [self.navigationController pushViewController:loginpg  animated:YES];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.navigationController.view cache:NO];
+    [UIView commitAnimations];
+    
+    
+    
+    
+}
+
+- (IBAction)signupbutton:(id)sender
+{
+    SignupViewController *singupg=(SignupViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:Nil]instantiateViewControllerWithIdentifier:@"signup"];
+    //[self.navigationController pushViewController:singupg animated:UIViewAnimationTransitionFlipFromLeft];
+    [UIView  beginAnimations: @"Showinfo"context: nil];
+    [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.75];
+    [self.navigationController pushViewController:singupg  animated:YES];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.navigationController.view cache:NO];
+    [UIView commitAnimations];
+}
 @end

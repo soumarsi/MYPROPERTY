@@ -7,8 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Footer.h"
+
+@protocol rightDelegate<NSObject>
+@optional
+-(void)rightclk:(UIButton *)sender;
+@end
 
 @interface RightMenu : UIView
+
+@property(assign)id<rightDelegate>rightDelegate;
 
 @property (strong, nonatomic) IBOutlet UIImageView *userImage;
 @property (strong, nonatomic) IBOutlet UILabel *userName;
@@ -16,5 +24,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *EditProfile;
 @property (strong, nonatomic) IBOutlet UIButton *changePassword;
 @property (strong, nonatomic) IBOutlet UIButton *logOut;
+
+- (IBAction)editProfileTap:(id)sender;
 
 @end

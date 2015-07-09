@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15B9B87B1B4D562B00D9FFB4 /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15B9B87A1B4D562B00D9FFB4 /* ChangePasswordViewController.m */; };
+		15B9B87E1B4D617600D9FFB4 /* GridTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 15B9B87D1B4D617600D9FFB4 /* GridTableViewCell.m */; };
+		15B9B8811B4D623800D9FFB4 /* GridefavouriteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 15B9B8801B4D623800D9FFB4 /* GridefavouriteTableViewCell.m */; };
+		15B9B88D1B4D6C5300D9FFB4 /* LeftMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15B9B88A1B4D6C5300D9FFB4 /* LeftMenu.xib */; };
+		15B9B88E1B4D6C5300D9FFB4 /* LeftMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 15B9B88C1B4D6C5300D9FFB4 /* LeftMenu.m */; };
+		15B9B8911B4D6C8600D9FFB4 /* MPDashBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15B9B8901B4D6C8600D9FFB4 /* MPDashBoardViewController.m */; };
 		8F7D05B61B4670AC002134AB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7D05B51B4670AC002134AB /* main.m */; };
 		8F7D05B91B4670AC002134AB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7D05B81B4670AC002134AB /* AppDelegate.m */; };
 		8F7D05BC1B4670AC002134AB /* MYPROPERTY.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F7D05BA1B4670AC002134AB /* MYPROPERTY.xcdatamodeld */; };
@@ -64,6 +70,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15B9B8791B4D562B00D9FFB4 /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
+		15B9B87A1B4D562B00D9FFB4 /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordViewController.m; sourceTree = "<group>"; };
+		15B9B87C1B4D617600D9FFB4 /* GridTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridTableViewCell.h; sourceTree = "<group>"; };
+		15B9B87D1B4D617600D9FFB4 /* GridTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridTableViewCell.m; sourceTree = "<group>"; };
+		15B9B87F1B4D623800D9FFB4 /* GridefavouriteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridefavouriteTableViewCell.h; sourceTree = "<group>"; };
+		15B9B8801B4D623800D9FFB4 /* GridefavouriteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridefavouriteTableViewCell.m; sourceTree = "<group>"; };
+		15B9B88A1B4D6C5300D9FFB4 /* LeftMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftMenu.xib; sourceTree = "<group>"; };
+		15B9B88B1B4D6C5300D9FFB4 /* LeftMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenu.h; sourceTree = "<group>"; };
+		15B9B88C1B4D6C5300D9FFB4 /* LeftMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenu.m; sourceTree = "<group>"; };
+		15B9B88F1B4D6C8600D9FFB4 /* MPDashBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPDashBoardViewController.h; sourceTree = "<group>"; };
+		15B9B8901B4D6C8600D9FFB4 /* MPDashBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPDashBoardViewController.m; sourceTree = "<group>"; };
 		8F7D05B01B4670AC002134AB /* MYPROPERTY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MYPROPERTY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F7D05B41B4670AC002134AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F7D05B51B4670AC002134AB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -230,6 +247,10 @@
 				8FC3F0191B4ACA9C00488D64 /* RS_PCH.pch */,
 				8FC3F0101B4ACA1D00488D64 /* LoginViewController.h */,
 				8FC3F0111B4ACA1D00488D64 /* LoginViewController.m */,
+				15B9B88F1B4D6C8600D9FFB4 /* MPDashBoardViewController.h */,
+				15B9B8901B4D6C8600D9FFB4 /* MPDashBoardViewController.m */,
+				15B9B8791B4D562B00D9FFB4 /* ChangePasswordViewController.h */,
+				15B9B87A1B4D562B00D9FFB4 /* ChangePasswordViewController.m */,
 				8FC3F0121B4ACA1D00488D64 /* SignupViewController.h */,
 				8FC3F0131B4ACA1D00488D64 /* SignupViewController.m */,
 				8F7D06261B46CF47002134AB /* FavouriteViewController.h */,
@@ -243,7 +264,6 @@
 				8F7D061A1B46CC3B002134AB /* Listing0ViewController.h */,
 				8F7D061B1B46CC3B002134AB /* Listing0ViewController.m */,
 				8F7D061C1B46CC3B002134AB /* Listing1ViewController.h */,
-				8F7D06081B468B21002134AB /* RightMenu.m */,
 				8F7D061D1B46CC3B002134AB /* Listing1ViewController.m */,
 				8F7D061E1B46CC3B002134AB /* PropertyDetails2ViewController.h */,
 				8F7D061F1B46CC3B002134AB /* PropertyDetails2ViewController.m */,
@@ -264,9 +284,13 @@
 			children = (
 				8F7D05E31B4684E4002134AB /* RightMenu.xib */,
 				8F7D06071B468B21002134AB /* RightMenu.h */,
+				8F7D06081B468B21002134AB /* RightMenu.m */,
 				8F7D06131B46B784002134AB /* Footer.xib */,
 				8F7D06151B46BB6F002134AB /* Footer.h */,
 				8F7D06161B46BB6F002134AB /* Footer.m */,
+				15B9B88A1B4D6C5300D9FFB4 /* LeftMenu.xib */,
+				15B9B88B1B4D6C5300D9FFB4 /* LeftMenu.h */,
+				15B9B88C1B4D6C5300D9FFB4 /* LeftMenu.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -274,6 +298,10 @@
 		8F7D05DE1B4670E0002134AB /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				15B9B87C1B4D617600D9FFB4 /* GridTableViewCell.h */,
+				15B9B87D1B4D617600D9FFB4 /* GridTableViewCell.m */,
+				15B9B87F1B4D623800D9FFB4 /* GridefavouriteTableViewCell.h */,
+				15B9B8801B4D623800D9FFB4 /* GridefavouriteTableViewCell.m */,
 				8F7D06321B46CF72002134AB /* FavouriteTableViewCell.h */,
 				8F7D06331B46CF72002134AB /* FavouriteTableViewCell.m */,
 				8F7D06341B46CF72002134AB /* Listing3TableViewCell.h */,
@@ -393,6 +421,7 @@
 				8FC3F0051B4AA7F000488D64 /* OpenSans-CondBold.ttf in Resources */,
 				8FC3F00A1B4AA7F000488D64 /* OpenSans-Italic.ttf in Resources */,
 				8FC3F00D1B4AA7F000488D64 /* OpenSans-Regular.ttf in Resources */,
+				15B9B88D1B4D6C5300D9FFB4 /* LeftMenu.xib in Resources */,
 				8FC3F0031B4AA7F000488D64 /* OpenSans-Bold.ttf in Resources */,
 				8FC3F0071B4AA7F000488D64 /* OpenSans-CondLightItalic.ttf in Resources */,
 				8FC3F0041B4AA7F000488D64 /* OpenSans-BoldItalic.ttf in Resources */,
@@ -422,11 +451,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F7D06311B46CF47002134AB /* ViewController.m in Sources */,
+				15B9B87B1B4D562B00D9FFB4 /* ChangePasswordViewController.m in Sources */,
 				8F7D06221B46CC3B002134AB /* Listing0ViewController.m in Sources */,
 				8F7D06251B46CC3B002134AB /* SearchViewController.m in Sources */,
 				8F7D05BC1B4670AC002134AB /* MYPROPERTY.xcdatamodeld in Sources */,
 				8FC3F0151B4ACA1D00488D64 /* SignupViewController.m in Sources */,
 				8F7D060F1B46A323002134AB /* MPNotificationViewController.m in Sources */,
+				15B9B8811B4D623800D9FFB4 /* GridefavouriteTableViewCell.m in Sources */,
+				15B9B88E1B4D6C5300D9FFB4 /* LeftMenu.m in Sources */,
+				15B9B87E1B4D617600D9FFB4 /* GridTableViewCell.m in Sources */,
+				15B9B8911B4D6C8600D9FFB4 /* MPDashBoardViewController.m in Sources */,
 				8F7D062E1B46CF47002134AB /* FavouriteViewController.m in Sources */,
 				8F7D063A1B46CF72002134AB /* PropertyTableViewCell.m in Sources */,
 				8F7D060C1B469C1F002134AB /* MPRegisterPropertyViewController.m in Sources */,

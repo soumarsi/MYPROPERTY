@@ -20,7 +20,6 @@
     BOOL rightslide;
     Footer *footerView;
     UIView *blackview;
-   
 }
 
 @property (strong, nonatomic) IBOutlet UIView *mainview;

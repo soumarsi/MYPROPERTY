@@ -9,6 +9,7 @@
 #import "RightMenu.h"
 
 @implementation RightMenu
+@synthesize rightDelegate;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -27,4 +28,18 @@
     }
     return self;
 }
+
+- (IBAction)editProfileTap:(id)sender
+{
+    [rightDelegate rightclk:sender];
+}
+
+- (IBAction)changPasswordTapped:(id)sender
+{
+    [rightDelegate rightclk:sender];
+}
+
+
 @end
+
+
