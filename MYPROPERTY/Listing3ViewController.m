@@ -220,9 +220,11 @@
     }
     else if (tagId == 4)
     {
-        [FBSession.activeSession closeAndClearTokenInformation];
-        [FBSession.activeSession close];
-        [FBSession setActiveSession:nil];
+        
+        
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SessionStateChangeNotification" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
         [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
             NSLog(@"logout");
@@ -230,6 +232,11 @@
        // NSArray *array = [self.navigationController viewControllers];
         //[self.navigationController popToViewController:[array objectAtIndex:0] animated:NO];
         ViewController *home=(ViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:Nil]instantiateViewControllerWithIdentifier:@"loginpage"];
+        
+        [FBSession.activeSession closeAndClearTokenInformation];
+        [FBSession.activeSession close];
+        [FBSession setActiveSession:nil];
+
         [self.navigationController pushViewController:home animated:NO];
         
     }

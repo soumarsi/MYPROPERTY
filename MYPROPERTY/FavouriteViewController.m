@@ -42,6 +42,8 @@
     
     _tableviewfevourite.delegate=self;
     _tableviewfevourite.dataSource=self;
+    [_tableviewfevourite setShowsHorizontalScrollIndicator:NO];
+    [_tableviewfevourite setShowsVerticalScrollIndicator:NO];
     
     footerView = [[Footer alloc]init];
     blackview = [[UIView alloc]init];
@@ -216,13 +218,22 @@
     }
     else if (tagId == 4)
     {
-        [FBSession.activeSession closeAndClearTokenInformation];
-        [FBSession.activeSession close];
-        [FBSession setActiveSession:nil];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SessionStateChangeNotification" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
         [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
         NSLog(@"logout");
-        [self.navigationController popToRootViewControllerAnimated:NO];
+        //[self.navigationController popToRootViewControllerAnimated:NO];
+        // NSArray *array = [self.navigationController viewControllers];
+        //[self.navigationController popToViewController:[array objectAtIndex:0] animated:NO];
+        ViewController *home=(ViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:Nil]instantiateViewControllerWithIdentifier:@"loginpage"];
+        
+        [FBSession.activeSession closeAndClearTokenInformation];
+        [FBSession.activeSession close];
+        [FBSession setActiveSession:nil];
+        
+        [self.navigationController pushViewController:home animated:NO];
         
     }
     
