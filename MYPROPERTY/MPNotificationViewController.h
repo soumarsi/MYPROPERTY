@@ -12,7 +12,9 @@
 @interface MPNotificationViewController : UIViewController
 {
     NotificationCell *cell;
-}
+    
+    
+   }
 
 @property (strong, nonatomic) IBOutlet UIButton *messagebtn;
 @property (strong, nonatomic) IBOutlet UIButton *settingbtn;
@@ -22,4 +24,6 @@
 @property (strong, nonatomic) IBOutlet UIView *renewalert;
 @property (strong, nonatomic) IBOutlet UIView *offeralert;
 @property (strong, nonatomic) IBOutlet UIView *propertyalert;
+
+//- (IBAction)menubtn:(id)sender;
 @end

@@ -11,5 +11,7 @@
 
 @interface Listing3ViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *tableviewlisting3;
+- (IBAction)gridviewbutton:(id)sender;
+- (IBAction)listviewbutton:(id)sender;
 
 @end

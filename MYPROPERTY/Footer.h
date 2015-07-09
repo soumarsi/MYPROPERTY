@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+
 @protocol footerdelegate<NSObject>
+
 @optional
 -(void)pushmethod:(UIButton *)sender;
+
 @end
 
 @interface Footer : UIView

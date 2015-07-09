@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FW_JsonClass.h"
 
-@interface Listing0ViewController : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate>
+@interface Listing0ViewController : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
 
 #define _kdata 0;
 {
@@ -33,7 +33,9 @@
     IBOutlet UIButton *done;
     int btntag ;
 }
-@property(strong,nonatomic) NSMutableArray *Arry1;
+@property (strong, nonatomic) IBOutlet UITextField *srchFld;
+@property(strong,nonatomic) NSMutableArray *Arry1,*Arry2,*Arry3,*Arry4,*Arry5;
+- (IBAction)backBtn:(id)sender;
 - (IBAction)btn1:(id)sender;
 - (IBAction)btn2:(id)sender;
 - (IBAction)btn3:(id)sender;

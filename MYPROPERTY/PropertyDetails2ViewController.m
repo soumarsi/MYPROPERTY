@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [_mainscroll setContentSize:CGSizeMake(self.view.frame.size.width, 800)];
+    [_mainscroll setContentSize:CGSizeMake(self.view.frame.size.width, 798)];
 }
 
 - (IBAction)backTapped:(id)sender

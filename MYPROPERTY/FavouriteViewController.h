@@ -11,5 +11,10 @@
 
 @interface FavouriteViewController : ViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *tableviewfevourite;
+- (IBAction)grideviewbutton:(id)sender;
+
+- (IBAction)listviewbutton:(id)sender;
+
+
 
 @end

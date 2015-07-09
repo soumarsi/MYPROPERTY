@@ -53,6 +53,10 @@
     if (Buttontag == 5)
     {
         [_man setSelected:YES];
+        [_home setSelected:NO];
+        [_love setSelected:NO];
+        [_plus setSelected:NO];
+        [_bell setSelected:NO];
     }
 }
 

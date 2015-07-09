@@ -7,9 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface QFProfileViewController : UIViewController
+#import "FW_JsonClass.h"
+@interface QFProfileViewController : UIViewController<UITextFieldDelegate>
 {
+    IBOutlet UITextField *nameUpdate;
+    
+
+    IBOutlet UITextField *phonenoUpdate;
+   
+    IBOutlet UITextField *emailUpdate;
+    
+    
+    IBOutlet UIButton *updatebtn;
+    NSString *userid;
+
+    FW_JsonClass *obj;
 
 }
 
@@ -17,4 +29,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *profileName;
 @property (strong, nonatomic) IBOutlet UIButton *backBtn;
 @property (strong, nonatomic) IBOutlet UIButton *profileEdit;
+
+
+- (IBAction)update:(id)sender;
+
+
 @end
