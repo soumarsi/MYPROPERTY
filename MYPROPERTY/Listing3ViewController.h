@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "Listing3TableViewCell.h"
+#import <FacebookSDK/FacebookSDK.h>
+#import "ViewController.h"
 
 @interface Listing3ViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *tableviewlisting3;

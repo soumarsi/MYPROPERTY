@@ -18,9 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     obj= [[FW_JsonClass alloc]init];
-    _chngbtn.layer.cornerRadius=3;
-    _confrmpwd.delegate=self;
-     userid = [[NSUserDefaults standardUserDefaults] objectForKey:@"id"];
+    
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -33,39 +31,21 @@
 
 - (IBAction)chngpwdbtn:(id)sender {
     
+    NSString *url = [NSString stringWithFormat:@"%@json_output.php?mode=change_password&user_id=4&user_password=%@",App_Domain_Url,[_newpwd text]];
     
-    if ([self.newpwd.text isEqual:self.confrmpwd.text] ) {
-        
-        NSString *url = [NSString stringWithFormat:@"%@json_output.php?mode=change_password&user_id=%@&user_password=%@",App_Domain_Url,userid,[_newpwd text]];
-        
-        [obj GlobalDict:url Globalstr:@"array" Withblock:^(id result, NSError *error)
-         {
-             
-             
-             NSMutableArray *temp = [result mutableCopy];
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                             message:[temp valueForKey:@"message"]
-                                                            delegate:self
-                                                   cancelButtonTitle:@"Cancel"
-                                                   otherButtonTitles:nil,nil];
-             [alert show];
-             
-         }];
-
-        
-        
-    }
-    
-    else if ([self TarminateWhiteSpace:_newpwd.text].length==0)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"Faild"
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:nil,nil];
-        [alert show];
-
-    }
+    [obj GlobalDict:url Globalstr:@"array" Withblock:^(id result, NSError *error)
+     {
+         
+         
+         NSMutableArray *temp = [result mutableCopy];
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                         message:[temp valueForKey:@"message"]
+                                                        delegate:self
+                                               cancelButtonTitle:@"Cancel"
+                                               otherButtonTitles:nil,nil];
+         [alert show];
+         
+     }];
     
     
 }
@@ -79,14 +59,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
--(NSString *)TarminateWhiteSpace:(NSString *)Str
-{
-    NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-    NSString *trimmed = [Str stringByTrimmingCharactersInSet:whitespace];
-    return trimmed;
-}
-
 
 /*
 #pragma mark - Navigation

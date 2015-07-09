@@ -19,7 +19,6 @@
     
     
     IBOutlet UIButton *updatebtn;
-    NSString *userid;
 
     FW_JsonClass *obj;
 

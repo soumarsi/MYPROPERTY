@@ -25,11 +25,6 @@
     
     obj = [[FW_JsonClass alloc]init];
     Footer *footer=[[Footer alloc]init];
-    //NSString *Value = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_nicename"];
-     nameUpdate.text =[[NSUserDefaults standardUserDefaults] objectForKey:@"user_nicename"];
-    emailUpdate.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_email"];
-    //phonenoUpdate.text = [[NSUserDefaults standardUserDefaults]objectForKey:@""];
-     userid = [[NSUserDefaults standardUserDefaults] objectForKey:@"id"];
     
 //    [footer setFrame:CGRectMake(0, self.view.frame.size.height - 60, self.view.frame.size.width, 60)];
     
@@ -120,7 +115,7 @@
     
     else{
     
-    NSString *url = [NSString stringWithFormat:@"%@json_output.php?mode=update_profile_details&user_id=%@&user_name=%@&address=kol&town=test&post_code=70&country=india&phone=%@&address=kol",App_Domain_Url,userid,[nameUpdate text],[phonenoUpdate text]];
+    NSString *url = [NSString stringWithFormat:@"%@json_output.php?mode=update_profile_details&user_id=4&user_name=%@&address=kol&town=test&post_code=70&country=india&phone=%@&address=kol",App_Domain_Url,[nameUpdate text],[phonenoUpdate text]];
     [obj GlobalDict:url Globalstr:@"array" Withblock:^(id result, NSError *error)
      {
          
