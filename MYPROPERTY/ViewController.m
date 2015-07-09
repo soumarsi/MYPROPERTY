@@ -22,7 +22,11 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
+    
+    // part 2
+    
     [super viewDidLoad];
     username=[[NSString alloc]init];
     mailid=[[NSString alloc]init];
