@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NotificationCell.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface MPNotificationViewController : UIViewController
 {
@@ -25,5 +26,5 @@
 @property (strong, nonatomic) IBOutlet UIView *offeralert;
 @property (strong, nonatomic) IBOutlet UIView *propertyalert;
 
-//- (IBAction)menubtn:(id)sender;
+- (IBAction)menubtn:(id)sender;
 @end

@@ -39,6 +39,9 @@
     [rightDelegate rightclk:sender];
 }
 
+- (IBAction)logout:(id)sender {
+    [rightDelegate rightclk:sender];
+}
 
 @end
 

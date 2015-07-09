@@ -214,6 +214,17 @@
         ChangePasswordViewController *pro = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"changepwd"];
         [self.navigationController pushViewController:pro animated:YES];
     }
+    else if (tagId == 4)
+    {
+        [FBSession.activeSession closeAndClearTokenInformation];
+        [FBSession.activeSession close];
+        [FBSession setActiveSession:nil];
+        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+        NSLog(@"logout");
+        [self.navigationController popToRootViewControllerAnimated:NO];
+        
+    }
     
 }
 
