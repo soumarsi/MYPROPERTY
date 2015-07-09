@@ -12,16 +12,17 @@
 {
     IBOutlet UITextField *nameUpdate;
     
-
+    
     IBOutlet UITextField *phonenoUpdate;
-   
+    
     IBOutlet UITextField *emailUpdate;
     
     
     IBOutlet UIButton *updatebtn;
-
+    NSString *userid;
+    
     FW_JsonClass *obj;
-
+    
 }
 
 @property (strong, nonatomic) IBOutlet UIImageView *profilepic;

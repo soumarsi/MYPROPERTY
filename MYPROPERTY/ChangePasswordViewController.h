@@ -12,6 +12,7 @@
 @interface ChangePasswordViewController : UIViewController
 {
     FW_JsonClass *obj;
+    NSString *userid;
 }
 @property (strong, nonatomic) IBOutlet UIButton *chngbtn;
 @property (strong, nonatomic) IBOutlet UITextField *newpwd;
