@@ -25,7 +25,6 @@
 - (void)viewDidLoad
 {
     
-    // part 2
     
     [super viewDidLoad];
     username=[[NSString alloc]init];

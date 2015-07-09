@@ -19,7 +19,6 @@
 		8F7D05C21B4670AC002134AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F7D05C01B4670AC002134AB /* Main.storyboard */; };
 		8F7D05C41B4670AC002134AB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F7D05C31B4670AC002134AB /* Images.xcassets */; };
 		8F7D05C71B4670AC002134AB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F7D05C51B4670AC002134AB /* LaunchScreen.xib */; };
-		8F7D05D31B4670AC002134AB /* MYPROPERTYTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7D05D21B4670AC002134AB /* MYPROPERTYTests.m */; };
 		8F7D05E21B4681E1002134AB /* QFProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7D05E11B4681E1002134AB /* QFProfileViewController.m */; };
 		8F7D05E41B4684E4002134AB /* RightMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F7D05E31B4684E4002134AB /* RightMenu.xib */; };
 		8F7D06091B468B21002134AB /* RightMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7D06081B468B21002134AB /* RightMenu.m */; };
@@ -59,16 +58,6 @@
 		965FA95A1B4B919D00C5440F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 965FA9591B4B919D00C5440F /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		8F7D05CD1B4670AC002134AB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8F7D05A81B4670AB002134AB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8F7D05AF1B4670AC002134AB;
-			remoteInfo = MYPROPERTY;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		15B9B8791B4D562B00D9FFB4 /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
 		15B9B87A1B4D562B00D9FFB4 /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordViewController.m; sourceTree = "<group>"; };
@@ -90,7 +79,6 @@
 		8F7D05C11B4670AC002134AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8F7D05C31B4670AC002134AB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8F7D05C61B4670AC002134AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		8F7D05CC1B4670AC002134AB /* MYPROPERTYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MYPROPERTYTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F7D05D11B4670AC002134AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F7D05D21B4670AC002134AB /* MYPROPERTYTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MYPROPERTYTests.m; sourceTree = "<group>"; };
 		8F7D05E01B4681E1002134AB /* QFProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QFProfileViewController.h; sourceTree = "<group>"; };
@@ -164,13 +152,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8F7D05C91B4670AC002134AB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -200,7 +181,6 @@
 			isa = PBXGroup;
 			children = (
 				8F7D05B01B4670AC002134AB /* MYPROPERTY.app */,
-				8F7D05CC1B4670AC002134AB /* MYPROPERTYTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -362,24 +342,6 @@
 			productReference = 8F7D05B01B4670AC002134AB /* MYPROPERTY.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8F7D05CB1B4670AC002134AB /* MYPROPERTYTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8F7D05D91B4670AC002134AB /* Build configuration list for PBXNativeTarget "MYPROPERTYTests" */;
-			buildPhases = (
-				8F7D05C81B4670AC002134AB /* Sources */,
-				8F7D05C91B4670AC002134AB /* Frameworks */,
-				8F7D05CA1B4670AC002134AB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				8F7D05CE1B4670AC002134AB /* PBXTargetDependency */,
-			);
-			name = MYPROPERTYTests;
-			productName = MYPROPERTYTests;
-			productReference = 8F7D05CC1B4670AC002134AB /* MYPROPERTYTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -391,10 +353,6 @@
 				TargetAttributes = {
 					8F7D05AF1B4670AC002134AB = {
 						CreatedOnToolsVersion = 6.2;
-					};
-					8F7D05CB1B4670AC002134AB = {
-						CreatedOnToolsVersion = 6.2;
-						TestTargetID = 8F7D05AF1B4670AC002134AB;
 					};
 				};
 			};
@@ -412,7 +370,6 @@
 			projectRoot = "";
 			targets = (
 				8F7D05AF1B4670AC002134AB /* MYPROPERTY */,
-				8F7D05CB1B4670AC002134AB /* MYPROPERTYTests */,
 			);
 		};
 /* End PBXProject section */
@@ -441,13 +398,6 @@
 				8F7D05C41B4670AC002134AB /* Images.xcassets in Resources */,
 				8FC3F00C1B4AA7F000488D64 /* OpenSans-LightItalic.ttf in Resources */,
 				8FC3F00E1B4AA7F000488D64 /* OpenSans-Semibold.ttf in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8F7D05CA1B4670AC002134AB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,23 +439,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8F7D05C81B4670AC002134AB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8F7D05D31B4670AC002134AB /* MYPROPERTYTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		8F7D05CE1B4670AC002134AB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8F7D05AF1B4670AC002134AB /* MYPROPERTY */;
-			targetProxy = 8F7D05CD1B4670AC002134AB /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8F7D05C01B4670AC002134AB /* Main.storyboard */ = {
@@ -635,40 +569,6 @@
 			};
 			name = Release;
 		};
-		8F7D05DA1B4670AC002134AB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = MYPROPERTYTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MYPROPERTY.app/MYPROPERTY";
-			};
-			name = Debug;
-		};
-		8F7D05DB1B4670AC002134AB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = MYPROPERTYTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MYPROPERTY.app/MYPROPERTY";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -686,15 +586,6 @@
 			buildConfigurations = (
 				8F7D05D71B4670AC002134AB /* Debug */,
 				8F7D05D81B4670AC002134AB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8F7D05D91B4670AC002134AB /* Build configuration list for PBXNativeTarget "MYPROPERTYTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8F7D05DA1B4670AC002134AB /* Debug */,
-				8F7D05DB1B4670AC002134AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
