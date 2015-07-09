@@ -74,6 +74,16 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SessionStateChangeNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+}
+
+
+
+
 -(void)handleFBSessionStateChangeWithNotification:(NSNotification *)notification{
     // Get the session, state and error values from the notification's userInfo dictionary.
     polygonView = [[UIView alloc] initWithFrame: CGRectMake ( 0, 0, self.view.bounds.size.width,self.view.bounds.size.height )];
@@ -172,9 +182,6 @@
                                                
                                                
                                            }];
-                                          
-                                          
-                                          
                                           
                                           
                                           // Stop the activity indicator from animating and hide the status label.

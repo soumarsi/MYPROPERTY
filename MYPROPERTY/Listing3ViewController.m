@@ -219,7 +219,13 @@
         [self.navigationController pushViewController:pro animated:YES];
     }
     else if (tagId == 4)
-    {        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    {
+        
+        
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SessionStateChangeNotification" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
         [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
             NSLog(@"logout");
         //[self.navigationController popToRootViewControllerAnimated:NO];
