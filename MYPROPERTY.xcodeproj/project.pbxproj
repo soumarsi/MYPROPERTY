@@ -174,6 +174,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15E855651B4E7065006CA193 /* Url fire */ = {
+			isa = PBXGroup;
+			children = (
+				8FC3F0161B4ACA9C00488D64 /* FW_JsonClass.h */,
+				8FC3F0171B4ACA9C00488D64 /* FW_JsonClass.m */,
+				8FC3F0181B4ACA9C00488D64 /* RS_ios_customBlock.h */,
+				8FC3F0191B4ACA9C00488D64 /* RS_PCH.pch */,
+			);
+			name = "Url fire";
+			sourceTree = "<group>";
+		};
 		8F7D05A71B4670AB002134AB = {
 			isa = PBXGroup;
 			children = (
@@ -197,6 +208,7 @@
 		8F7D05B21B4670AC002134AB /* MYPROPERTY */ = {
 			isa = PBXGroup;
 			children = (
+				15E855651B4E7065006CA193 /* Url fire */,
 				8F7D05DE1B4670E0002134AB /* TableViewCells */,
 				8F7D05DD1B4670D6002134AB /* Views */,
 				8F7D05DC1B4670C1002134AB /* Classes */,
@@ -241,10 +253,6 @@
 		8F7D05DC1B4670C1002134AB /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				8FC3F0161B4ACA9C00488D64 /* FW_JsonClass.h */,
-				8FC3F0171B4ACA9C00488D64 /* FW_JsonClass.m */,
-				8FC3F0181B4ACA9C00488D64 /* RS_ios_customBlock.h */,
-				8FC3F0191B4ACA9C00488D64 /* RS_PCH.pch */,
 				8FC3F0101B4ACA1D00488D64 /* LoginViewController.h */,
 				8FC3F0111B4ACA1D00488D64 /* LoginViewController.m */,
 				15B9B88F1B4D6C8600D9FFB4 /* MPDashBoardViewController.h */,
