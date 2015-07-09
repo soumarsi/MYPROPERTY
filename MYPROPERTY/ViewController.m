@@ -59,13 +59,12 @@
         [_labellogin setFont: [UIFont fontWithName:@"Helvetica Bold" size:14.0]];
         
     }
-    NSString *Value = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-    NSLog(@"%@",Value);
-    
-    
     self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (![FBSession activeSession].state == FBSessionStateCreatedTokenLoaded)
+    {
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleFBSessionStateChangeWithNotification:) name:@"SessionStateChangeNotification" object:nil];
+    }
     
     //    TWTRLogInButton *logInButton = [TWTRLogInButton buttonWithLogInCompletion:^(TWTRSession *session, NSError *error) {
     //        // play with Twitter session
@@ -192,6 +191,7 @@
         }
         else if (sessionState == FBSessionStateClosed || sessionState == FBSessionStateClosedLoginFailed){
             // A session was closed or the login was failed. Update the UI accordingly.
+            
             [spinner stopAnimating];
             [spinner removeFromSuperview];
             [polygonView removeFromSuperview];
@@ -223,6 +223,7 @@
 
 - (IBAction)fbloginbutton:(id)sender
 {
+    
     if ([FBSession activeSession].state != FBSessionStateOpen &&
         [FBSession activeSession].state != FBSessionStateOpenTokenExtended) {
         

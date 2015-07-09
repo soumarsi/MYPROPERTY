@@ -222,7 +222,11 @@
         NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
         [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
         NSLog(@"logout");
-        [self.navigationController popToRootViewControllerAnimated:NO];
+        //[self.navigationController popToRootViewControllerAnimated:NO];
+        // NSArray *array = [self.navigationController viewControllers];
+        //[self.navigationController popToViewController:[array objectAtIndex:0] animated:NO];
+        ViewController *home=(ViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:Nil]instantiateViewControllerWithIdentifier:@"loginpage"];
+        [self.navigationController pushViewController:home animated:NO];
         
     }
     
