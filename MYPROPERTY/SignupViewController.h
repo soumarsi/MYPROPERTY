@@ -27,6 +27,8 @@
 @property (strong, nonatomic) IBOutlet UITextField *confirmpasswordtextfield;
 @property(strong ,nonatomic) NSMutableArray *Arry1;
 - (IBAction)clickSignup:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *clickSignup;
+
 - (IBAction)loginbuttonpushfromsignup:(id)sender;
 
 @end

@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "Listing3TableViewCell.h"
-#import <FacebookSDK/FacebookSDK.h>
-#import "ViewController.h"
 
 @interface Listing3ViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+
 @property (strong, nonatomic) IBOutlet UITableView *tableviewlisting3;
 - (IBAction)gridviewbutton:(id)sender;
 - (IBAction)listviewbutton:(id)sender;
+@property (strong,nonatomic) NSMutableArray *srchdata;
+@property (strong ,nonatomic) NSString *srchtext;
 
 @end

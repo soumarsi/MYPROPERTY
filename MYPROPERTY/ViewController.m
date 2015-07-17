@@ -15,6 +15,9 @@
 @interface ViewController (){
     UIView *polygonView;
     NSMutableArray *Arry1;
+    NSMutableArray *temp;
+    NSString *fburl;
+    NSString *fbuserid;
 }
 @property (nonatomic, strong) AppDelegate *appDelegate;
 
@@ -22,10 +25,7 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad
-{
-    
-    
+- (void)viewDidLoad {
     [super viewDidLoad];
     username=[[NSString alloc]init];
     mailid=[[NSString alloc]init];
@@ -36,6 +36,7 @@
     obj = [[FW_JsonClass alloc]init];
     Arry1=[[NSMutableArray alloc]init];
     defaults=[[NSUserDefaults alloc]init];
+    userinfo=[[NSUserDefaults alloc]init];
     CGRect screenBounds=[[UIScreen mainScreen] bounds];
     if(screenBounds.size.height == 667 && screenBounds.size.width == 375)
     {
@@ -65,8 +66,8 @@
     self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (![FBSession activeSession].state == FBSessionStateCreatedTokenLoaded)
     {
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleFBSessionStateChangeWithNotification:) name:@"SessionStateChangeNotification" object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleFBSessionStateChangeWithNotification:) name:@"SessionStateChangeNotification" object:nil];
     }
     
     //    TWTRLogInButton *logInButton = [TWTRLogInButton buttonWithLogInCompletion:^(TWTRSession *session, NSError *error) {
@@ -120,7 +121,7 @@
                                                                  [result objectForKey:@"first_name"],
                                                                  [result objectForKey:@"last_name"]
                                                                  ]);
-                                          fullname=[NSString stringWithFormat:@"%@%@",
+                                          fullname=[NSString stringWithFormat:@"%@ %@",
                                                     [result objectForKey:@"first_name"],[result objectForKey:@"last_name"]
                                                     ];
                                           username=fullname;
@@ -129,6 +130,10 @@
                                           mailid=[NSString stringWithFormat:@"%@",
                                                   [result objectForKey:@"email"]
                                                   ];
+                                          
+                                          fbuserid=[result objectForKey:@"id"];
+                                          fburl=[[[result objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
+                                          NSLog(@"url%@",fburl);
                                           
                                           [defaults setValue:username forKey:@"username"];
                                           [defaults setValue:[result objectForKey:@"email"] forKey:@"email"];
@@ -151,9 +156,11 @@
                                           
                                           
                                           
-                                          NSString *url = [NSString stringWithFormat:@"%@json_output.php?mode=login_via_facebook&user_login=%@&user_nicename=%@&user_email=%@&user_registered=%@&display_name=%@",App_Domain_Url,username,nicename,mailid,string,displayname];
+                                          NSString *url = [NSString stringWithFormat:@"%@json_output.php?mode=login_via_facebook&user_login=%@&user_nicename=%@&user_email=%@&user_registered=%@&display_name=%@&facebook_id=%@&facebook_url=%@",App_Domain_Url,username,nicename,mailid,string,displayname,fbuserid,fburl];
                                           
-                                          [obj GlobalDict:url Globalstr:@"array" Withblock:^(id result, NSError *error)
+                                          NSString *encode=[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                                          
+                                          [obj GlobalDict:encode Globalstr:@"array" Withblock:^(id result, NSError *error)
                                            {
                                                
                                                Arry1 =[[NSMutableArray alloc]init];
@@ -163,6 +170,15 @@
                                                
                                                if ([[Arry1 valueForKey:@"message"]isEqualToString:@"successfully logged in"]) {
                                                    
+                                                   temp=[[NSMutableArray alloc]init];
+                                                   temp=[result mutableCopy];
+                                                   [userinfo setValue:[temp valueForKey:@"user_id"] forKey:@"id"];
+                                                   [userinfo setValue:[temp valueForKey:@"user_login"] forKey:@"user_login"];
+                                                   [userinfo setValue:[temp valueForKey:@"user_nicename"] forKey:@"user_nicename"];
+                                                   [userinfo synchronize];
+                                                   
+                                                   NSString *Value = [[NSUserDefaults standardUserDefaults] objectForKey:@"id"];
+                                                   NSLog(@"userid-%@",Value);
                                                    [spinner stopAnimating];
                                                    [spinner removeFromSuperview];
                                                    [polygonView removeFromSuperview];
@@ -250,34 +266,34 @@
     }
 }
 
-//- (IBAction)twitterloginbutton:(id)sender
-//{
-//    polygonView = [[UIView alloc] initWithFrame: CGRectMake ( 0, 0, self.view.bounds.size.width,self.view.bounds.size.height )];
-//    polygonView.backgroundColor=[UIColor blackColor];
-//    polygonView.alpha=0.3;
-//    [self.view addSubview:polygonView];
-//    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-//    spinner.frame = CGRectMake(round((self.view.frame.size.width - 25) / 2), round((self.view.frame.size.height - 25) / 2), 25, 25);
-//
-//    [polygonView addSubview:spinner];
-//    [spinner startAnimating];
-//    [[Twitter sharedInstance] logInWithCompletion:^
-//     (TWTRSession *session, NSError *error) {
-//         if (session) {
-//             NSLog(@"signed in as %@", [session userName]);
-//             [spinner stopAnimating];
-//             [spinner removeFromSuperview];
-//             [polygonView removeFromSuperview];
-//             SearchViewController *home=(SearchViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:Nil]instantiateViewControllerWithIdentifier:@"searchView"];
-//             [self.navigationController pushViewController:home animated:YES];
-//         } else {
-//             [spinner stopAnimating];
-//             [spinner removeFromSuperview];
-//             [polygonView removeFromSuperview];
-//             NSLog(@"error: %@", [error localizedDescription]);
-//         }
-//     }];
-//}
+- (IBAction)twitterloginbutton:(id)sender
+{
+    //    polygonView = [[UIView alloc] initWithFrame: CGRectMake ( 0, 0, self.view.bounds.size.width,self.view.bounds.size.height )];
+    //    polygonView.backgroundColor=[UIColor blackColor];
+    //    polygonView.alpha=0.3;
+    //    [self.view addSubview:polygonView];
+    //    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    //    spinner.frame = CGRectMake(round((self.view.frame.size.width - 25) / 2), round((self.view.frame.size.height - 25) / 2), 25, 25);
+    //
+    //    [polygonView addSubview:spinner];
+    //    [spinner startAnimating];
+    //    [[Twitter sharedInstance] logInWithCompletion:^
+    //     (TWTRSession *session, NSError *error) {
+    //         if (session) {
+    //             NSLog(@"signed in as %@", [session userName]);
+    //             [spinner stopAnimating];
+    //             [spinner removeFromSuperview];
+    //             [polygonView removeFromSuperview];
+    //             SearchViewController *home=(SearchViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:Nil]instantiateViewControllerWithIdentifier:@"searchView"];
+    //             [self.navigationController pushViewController:home animated:YES];
+    //         } else {
+    //             [spinner stopAnimating];
+    //             [spinner removeFromSuperview];
+    //             [polygonView removeFromSuperview];
+    //             NSLog(@"error: %@", [error localizedDescription]);
+    //         }
+    //     }];
+}
 - (IBAction)loginbutton:(id)sender
 {
     LoginViewController *loginpg=(LoginViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:Nil]instantiateViewControllerWithIdentifier:@"login"];

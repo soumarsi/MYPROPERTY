@@ -86,7 +86,7 @@
     [UIView  beginAnimations: @"Showinfo"context: nil];
     [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
     [UIView setAnimationDuration:0.75];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
     [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.navigationController.view cache:NO];
     [UIView commitAnimations];
 }
@@ -123,7 +123,9 @@
     {
         NSString *url = [NSString stringWithFormat:@"%@json_output.php?mode=wp_check_email_password&user_login=%@&user_password=%@",App_Domain_Url,[_emailtext text], [_passwordtext text] ];
         
-        [obj GlobalDict:url Globalstr:@"array" Withblock:^(id result, NSError *error)
+        NSString *login=[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        [obj GlobalDict:login Globalstr:@"array" Withblock:^(id result, NSError *error)
          {
              
              _Arry1 =[[NSMutableArray alloc]init];

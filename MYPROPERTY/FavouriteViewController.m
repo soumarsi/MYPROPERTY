@@ -17,6 +17,10 @@
 #import "LeftMenu.h"
 #import "MPDashBoardViewController.h"
 #import "ChangePasswordViewController.h"
+#import "Listing0ViewController.h"
+#import "SearchViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
+#import "MPRegisterPropertyViewController.h"
 
 @interface FavouriteViewController ()<footerdelegate,UIGestureRecognizerDelegate,rightDelegate,leftDelegate>
 {
@@ -42,8 +46,6 @@
     
     _tableviewfevourite.delegate=self;
     _tableviewfevourite.dataSource=self;
-    [_tableviewfevourite setShowsHorizontalScrollIndicator:NO];
-    [_tableviewfevourite setShowsVerticalScrollIndicator:NO];
     
     footerView = [[Footer alloc]init];
     blackview = [[UIView alloc]init];
@@ -52,7 +54,7 @@
     
     footerView.footerdelegate=self;
     [footerView TapCheck:2];
-    [self.view addSubview:footerView];
+    [self.mainview addSubview:footerView];
     // Do any additional setup after loading the view.
 }
 
@@ -66,6 +68,8 @@
     if ( tagId == 1 )
     {
         NSLog(@"tagid is: %ld",(long)tagId);
+        SearchViewController *pro = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"searchView"];
+        [self.navigationController pushViewController:pro animated:NO];
     }
     else if ( tagId == 2 )
     {
@@ -74,9 +78,8 @@
     else if (tagId == 3)
     {
         NSLog(@"tagid is: %ld",(long)tagId);
-        PropertyViewController *prop = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"property"];
-        [self.navigationController pushViewController:prop animated:NO];
-    }
+        MPRegisterPropertyViewController *prop = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"registerproperty"];
+        [self.navigationController pushViewController:prop animated:NO];    }
     else if (tagId == 4)
     {
         MPNotificationViewController *noti = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"notification"];
@@ -84,7 +87,7 @@
     }
     else
     {
-        [footerView TapCheck:5];
+        //[footerView TapCheck:5];
         //        QFProfileViewController *pro = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"profile"];
         //        [self.navigationController pushViewController:pro animated:NO];
         if (rightslide == 0)
@@ -97,11 +100,11 @@
             blackview.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:.01];
             [_mainview setUserInteractionEnabled:YES];
             
-            /* UITapGestureRecognizer *tapGestureRecognize = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelRightMenu)];
+             UITapGestureRecognizer *tapGestureRecognize = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelRightMenuByTap)];
              tapGestureRecognize.delegate = self;
              tapGestureRecognize.numberOfTapsRequired = 1;
              [tapGestureRecognize requireGestureRecognizerToFail:tapGestureRecognize];
-             [blackview addGestureRecognizer:tapGestureRecognize]; */
+             [blackview addGestureRecognizer:tapGestureRecognize];
             
             UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(cancelRightMenu)];
             recognizer.direction = UISwipeGestureRecognizerDirectionRight;
@@ -117,7 +120,7 @@
             [_mainview addSubview:blackview];
             
             
-            [UIView animateWithDuration:.7 animations:^{
+            [UIView animateWithDuration:.5 animations:^{
                 
                 blackview.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
                 
@@ -135,7 +138,7 @@
         {
             //        [rightView removeFromSuperview];
             
-            [UIView animateWithDuration:.7 animations:^{
+            [UIView animateWithDuration:.5 animations:^{
                 
                 blackview.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.01];
                 
@@ -157,6 +160,25 @@
         
     }
 }
+
+-(void)cancelRightMenuByTap
+{
+    [UIView animateWithDuration:.5 animations:^{
+        
+        blackview.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.01];
+        
+        [rightView setFrame:CGRectMake(self.view.frame.size.width + 10, 0,self.view.frame.size.width*.55, self.mainview.frame.size.height)];
+        
+    }
+                     completion:^(BOOL finished){
+                         
+                         [blackview removeFromSuperview];
+                     }];
+    
+    rightslide = 0;
+}
+
+
 - (IBAction)leftMenuTapped:(id)sender
 {
     if (leftslide == 0)
@@ -167,7 +189,7 @@
         [self.view addSubview:leftView];
         
         
-        [UIView animateWithDuration:.7 animations:^{
+        [UIView animateWithDuration:.5 animations:^{
             
             [self.mainview setFrame:CGRectMake(self.mainview.frame.size.width*.6,0,[[UIScreen mainScreen] bounds].size.width,[[UIScreen mainScreen] bounds].size.height)];
             
@@ -182,7 +204,7 @@
     }
     else
     {
-        [UIView animateWithDuration:.7 animations:^{
+        [UIView animateWithDuration:.5 animations:^{
             
             [self.mainview setFrame:CGRectMake(0,0,[[UIScreen mainScreen] bounds].size.width,[[UIScreen mainScreen] bounds].size.height)];
             
@@ -209,16 +231,21 @@
         NSLog(@"tagid is: %ld",(long)tagId);
         QFProfileViewController *pro = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"profile"];
         [self.navigationController pushViewController:pro animated:YES];
+        [rightView removeFromSuperview];
+        [blackview removeFromSuperview];
+        rightslide = 0;
     }
     else if (tagId == 3)
     {
         NSLog(@"tagid is: %ld",(long)tagId);
         ChangePasswordViewController *pro = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"changepwd"];
         [self.navigationController pushViewController:pro animated:YES];
+        [rightView removeFromSuperview];
+        [blackview removeFromSuperview];
+        rightslide = 0;
     }
-    else if (tagId == 4)
+    else if (tagId == 5)
     {
-        
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SessionStateChangeNotification" object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
@@ -236,7 +263,7 @@
         [self.navigationController pushViewController:home animated:NO];
         
     }
-    
+
 }
 
 -(void)leftclk:(UIButton *)sender
@@ -248,8 +275,18 @@
     {
         NSLog(@"tagid is: %ld",(long)tagId);
         MPDashBoardViewController *fav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"dashboard"];
+        [self.mainview setFrame:CGRectMake(0,0,[[UIScreen mainScreen] bounds].size.width,[[UIScreen mainScreen] bounds].size.height)];
+        
+        [leftView removeFromSuperview];
+        leftslide = 0;
+        
         [self.navigationController pushViewController:fav animated:NO];
-    }
+            }
+//    else if ( tagId == 101 )
+//    {
+//        Listing0ViewController *fav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"list0"];
+//        [self.navigationController pushViewController:fav animated:NO];
+//    }
 }
 
 //- (IBAction)rightMenuBtnTapped:(id)sender

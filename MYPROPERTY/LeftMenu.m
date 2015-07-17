@@ -35,5 +35,4 @@
     [leftDelegate leftclk:sender];
 }
 
-
 @end

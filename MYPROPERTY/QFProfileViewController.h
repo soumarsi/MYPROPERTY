@@ -12,6 +12,7 @@
 {
     IBOutlet UITextField *nameUpdate;
     
+    IBOutlet UILabel *namelbl;
     
     IBOutlet UITextField *phonenoUpdate;
     
@@ -20,9 +21,10 @@
     IBOutlet UITextField *towntxt;
     IBOutlet UILabel *addresslbl;
     
+    IBOutlet UITextField *pincodetext;
     IBOutlet UIButton *updatebtn;
     NSString *userid;
-  
+    
     
     IBOutlet UIScrollView *scrollView;
     FW_JsonClass *obj;

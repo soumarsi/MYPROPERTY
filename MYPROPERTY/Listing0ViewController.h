@@ -8,14 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "FW_JsonClass.h"
+#import "list0Cell.h"
+#import "Listing3ViewController.h"
 
-@interface Listing0ViewController : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
+@interface Listing0ViewController : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
 
-#define _kdata 0;
+
 {
     FW_JsonClass *obj;
     IBOutlet UIView *myView;
     
+    IBOutlet UITableView *mytable;
     
     
     IBOutlet UILabel *lbl3;
@@ -31,10 +34,24 @@
     IBOutlet UIView *pview;
     NSString *holedata;
     IBOutlet UIButton *done;
+    NSMutableDictionary *data;
+    
+    NSString *lat,*lng;
+    
+    IBOutlet UISwitch *parking;
+    NSString *status;
+    
+    NSMutableArray *arry1 , *arry2,*arry3,*arry4;
+    NSString *id1 , *id2 , *id3,*id4;
+    
+    
+    NSMutableArray *searchArray;
+    
+    
     int btntag ;
 }
 @property (strong, nonatomic) IBOutlet UITextField *srchFld;
-@property(strong,nonatomic) NSMutableArray *Arry1,*Arry2,*Arry3,*Arry4,*Arry5;
+@property(strong,nonatomic) NSMutableArray *Arry1,*Arry2,*Arry3,*Arry4,*Arry5,*Arraytable;
 - (IBAction)backBtn:(id)sender;
 - (IBAction)btn1:(id)sender;
 - (IBAction)btn2:(id)sender;

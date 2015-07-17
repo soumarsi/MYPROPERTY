@@ -33,10 +33,60 @@
 
 - (IBAction)chngpwdbtn:(id)sender {
     
-    
-    if (![self TarminateWhiteSpace:_newpwd.text].length==0) {
+    if (![self TarminateWhiteSpace:_newpwd.text].length==0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Faild"
+                                                        message:@"Faild"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:nil,nil];
+        [alert show];
         
-       if ([self.newpwd.text isEqual:self.confrmpwd.text] ) {
+        
+    }
+    
+    
+    else if (_newpwd.text.length<6)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Faild"
+                                                        message:@"Enter min 6 digit password"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:nil,nil];
+        [alert show];
+        
+        
+    }
+    
+    
+    else if ([self TarminateWhiteSpace:_newpwd.text].length==0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Faild"
+                                                        message:@"Faild"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:nil,nil];
+        [alert show];
+        
+    }
+    
+    else if (!([self.newpwd.text isEqual:self.confrmpwd.text] ))
+    {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Faild"
+                                                        message:@"Password must Equal"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:nil,nil];
+        [alert show];
+        
+        
+        
+    }
+    
+    else
+    {
+        
         
         NSString *url = [NSString stringWithFormat:@"%@json_output.php?mode=change_password&user_id=%@&user_password=%@",App_Domain_Url,userid,[_newpwd text]];
         
@@ -56,27 +106,7 @@
         
         
         
-    }
-    }
-    
-    else if ([self TarminateWhiteSpace:_newpwd.text].length==0)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Faild"
-                                                        message:@"Faild"
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:nil,nil];
-        [alert show];
         
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Faild"
-                                                        message:@"Faild"
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:nil,nil];
-        [alert show];
     }
     
     

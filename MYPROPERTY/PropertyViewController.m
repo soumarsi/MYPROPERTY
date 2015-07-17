@@ -149,7 +149,7 @@
 
 -(void)cancelRightMenu
 {
-    [UIView animateWithDuration:.7 animations:^{
+    [UIView animateWithDuration:.5 animations:^{
         
         blackview.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.01];
         

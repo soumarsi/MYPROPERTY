@@ -13,12 +13,12 @@
 @synthesize footerdelegate;
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
 -(id)initWithFrame:(CGRect)frame
 {
@@ -65,41 +65,65 @@
 //    if ([footerdelegate respondsToSelector:@selector(pushmethod:)])
 //    {
 //        [footerdelegate pushmethod:sender];
-//        
+//
 //    }
-//    
+//
 //}
 
 - (IBAction)homeTapped:(id)sender
 {
     [footerdelegate pushmethod:sender];
-//    [_home setSelected:YES];
+    //    [_home setSelected:YES];
 }
 
 - (IBAction)favouritesTapped:(id)sender
 {
     [footerdelegate pushmethod:sender];
-//    [_love setSelected:YES];
+    //    [_love setSelected:YES];
 }
 
 - (IBAction)addTapped:(id)sender
 {
     [footerdelegate pushmethod:sender];
-//    [_plus setSelected:YES];
+    //    [_plus setSelected:YES];
 }
 
 - (IBAction)notificationTapped:(id)sender
 {
     [footerdelegate pushmethod:sender];
-//    [_bell setSelected:YES];
+    //    [_bell setSelected:YES];
 }
 
 - (IBAction)profileTapped:(id)sender
 {
     [footerdelegate pushmethod:sender];
-//    [_man setSelected:YES];
+    //    [_man setSelected:YES];
 }
 
+- (IBAction)homeBigBtn:(id)sender
+{
+    [footerdelegate pushmethod:sender];
+}
+
+- (IBAction)favBigBtn:(id)sender
+{
+    [footerdelegate pushmethod:sender];
+}
+
+- (IBAction)addBigBtn:(id)sender
+{
+    [footerdelegate pushmethod:sender];
+}
+
+- (IBAction)notiBigBtn:(id)sender
+{
+    [footerdelegate pushmethod:sender];
+}
+
+- (IBAction)menuBigBtn:(id)sender
+{
+    [footerdelegate pushmethod:sender];
+}
 
 
 @end

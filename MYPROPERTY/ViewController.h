@@ -15,6 +15,7 @@
 @interface ViewController : UIViewController
 {
     NSUserDefaults *defaults;
+    NSUserDefaults *userinfo;
     FW_JsonClass *obj;
     NSString *username;
     NSString *mailid;

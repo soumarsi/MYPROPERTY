@@ -8,6 +8,7 @@
 
 #import "SignupViewController.h"
 
+
 @interface SignupViewController ()
 
 @end
@@ -36,6 +37,7 @@
     [_emailtextfield setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     [_passwordtextfield setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     [_confirmpasswordtextfield setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    _clickSignup.layer.cornerRadius=3;
     // Do any additional setup after loading the view.
 }
 
@@ -102,7 +104,7 @@
     [UIView  beginAnimations: @"Showinfo"context: nil];
     [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
     [UIView setAnimationDuration:0.75];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
     [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.navigationController.view cache:NO];
     [UIView commitAnimations];
 }
@@ -112,7 +114,7 @@
 
 - (IBAction)clickSignup:(id)sender {
     
-     if([self TarminateWhiteSpace:_firstnametextfield.text].length==0)
+    if([self TarminateWhiteSpace:_firstnametextfield.text].length==0)
     {
         _firstnametextfield.text=@"";
         NSAttributedString *nn3=[[NSAttributedString alloc]initWithString:@"Please Enter name" attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
@@ -165,6 +167,8 @@
         NSLog(@"st%@",string);
         NSString *space=@"abc";
         NSString *url = [NSString stringWithFormat:@"%@json_output.php?mode=sign_up_via_email&user_name=%@&user_email=%@&user_password=%@&user_registered=%@&display_name=%@",App_Domain_Url,[_firstnametextfield text], [_emailtextfield text],[_passwordtextfield text],string,space];
+        
+        
         
         [obj GlobalDict:url Globalstr:@"array" Withblock:^(id result, NSError *error)
          {

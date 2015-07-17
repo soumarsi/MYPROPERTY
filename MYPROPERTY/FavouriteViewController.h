@@ -8,7 +8,6 @@
 
 #import "ViewController.h"
 #import "FavouriteTableViewCell.h"
-#import <FacebookSDK/FacebookSDK.h>
 
 @interface FavouriteViewController : ViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *tableviewfevourite;

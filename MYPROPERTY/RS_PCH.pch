@@ -15,7 +15,7 @@
 
 #define App_Domain_Url @"http://esolz.co.in/lab6/myproperty/web_service/"
 
-#define Image_Domain_Url @""
+#define Image_Domain_Url @"http://esolz.co.in/lab6/myproperty/web_service/"
 
 
 #endif

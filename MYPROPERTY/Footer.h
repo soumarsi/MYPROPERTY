@@ -21,7 +21,7 @@
 //- (IBAction)Footer_button_action:(UIButton *)sender;
 
 -(void)TapCheck:(int)Buttontag;
-@property(assign)id<footerdelegate>footerdelegate;
+@property(assign) id <footerdelegate> footerdelegate;
 
 @property (strong, nonatomic) IBOutlet UIButton *home;
 
