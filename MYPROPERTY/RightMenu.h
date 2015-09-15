@@ -15,6 +15,9 @@
 @end
 
 @interface RightMenu : UIView
+{
+    NSUserDefaults *userinfo;
+}
 
 @property(assign)id<rightDelegate>rightDelegate;
 

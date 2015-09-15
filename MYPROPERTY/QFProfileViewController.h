@@ -25,6 +25,7 @@
     IBOutlet UIButton *updatebtn;
     NSString *userid;
     
+    IBOutlet UIButton *countrybtn;
     
     IBOutlet UIScrollView *scrollView;
     FW_JsonClass *obj;
@@ -33,6 +34,8 @@
     IBOutlet UIPickerView *picker;
     IBOutlet UIView *pview;
     NSString *holedata;
+    
+    NSUserDefaults *userinfo;
     
 }
 

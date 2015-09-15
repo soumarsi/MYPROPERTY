@@ -10,4 +10,12 @@
 
 @interface GridefavouriteTableViewCell : UITableViewCell
 
+@property (strong, nonatomic) IBOutlet UILabel *roomslbl;
+@property (strong, nonatomic) IBOutlet UILabel *address;
+
+- (IBAction)removebutton:(UIButton *)sender;
+@property (strong, nonatomic) IBOutlet UILabel *pricelbl;
+@property (strong, nonatomic) IBOutlet UIImageView *homepicture;
+@property (strong, nonatomic) IBOutlet UIButton *removebutton;
+
 @end

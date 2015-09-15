@@ -10,6 +10,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 //#import <TwitterKit/TwitterKit.h>
 #import "FW_JsonClass.h"
+#import "Reachability.h"
 
 
 @interface ViewController : UIViewController
@@ -23,6 +24,7 @@
     NSString *nicename;
     NSString *displayname;
     NSString *fullname;
+    
 }
 @property (strong, nonatomic) IBOutlet UILabel *label1;
 @property (strong, nonatomic) IBOutlet UILabel *label2;

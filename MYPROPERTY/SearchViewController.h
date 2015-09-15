@@ -14,6 +14,9 @@
     IBOutlet UILabel *lbl1;
     IBOutlet UILabel *lbl2;
     IBOutlet UILabel *lbl3;
+    
+    
+    NSString *check;
 }
 
 @end

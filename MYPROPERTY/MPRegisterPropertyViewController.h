@@ -18,6 +18,8 @@
 #import "FW_JsonClass.h"
 #import "PropertyMediaViewController.h"
 #import "PropertyCertificateViewController.h"
+#import <CoreData/CoreData.h>
+#import "AppDelegate.h"
 
 
 
@@ -25,6 +27,7 @@
 
 {
     FW_JsonClass *obj;
+    AppDelegate *app;
     
     IBOutlet  UIPickerView *myPickerView;
     
@@ -45,7 +48,10 @@
     
     IBOutlet UITextView *propertyfulldescription;
     
-    
+    NSString *Longitude;
+    NSString *Latitude;
+    NSMutableArray *latArray;
+    NSMutableArray *longArray;
     
     
     NSMutableArray *Array_1,*Array_2,*Array_3,*Array_4,*Array_5;
@@ -81,6 +87,10 @@
     IBOutlet UILabel *propertysumrylbl;
     
     IBOutlet UILabel *propertydescriptionlbl;
+    
+    
+    NSMutableArray *Arryid1 , *Arryid2 ,*Arryid3 , *Arryid4 ;
+    NSString *sndid1 , *sndid2 ,*sndid3;
 }
 
 @property(strong,nonatomic)IBOutlet UITextField *picCodesrch;

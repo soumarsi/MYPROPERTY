@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "ViewController.h"
+#import "ForgotPassword.h"
 
 @interface LoginViewController ()
 
@@ -22,6 +23,10 @@
     obj = [[FW_JsonClass alloc]init];
     
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectCD:) name:@"no_internet" object:nil];
+    spinnerview.hidden=YES;
+    spinner.hidden=YES;
+    check=YES;
     _emailtext.delegate=self;
     _passwordtext.delegate=self;
     _emailtext.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -68,6 +73,13 @@
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+-(void)connectCD:(NSNotification *)note
+{
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Faild"   message:@"Connection Faild!" delegate:self  cancelButtonTitle:@"Cancel" otherButtonTitles:nil,nil];
+    [alert show];
 }
 
 /*
@@ -121,72 +133,141 @@
     }
     else
     {
-        NSString *url = [NSString stringWithFormat:@"%@json_output.php?mode=wp_check_email_password&user_login=%@&user_password=%@",App_Domain_Url,[_emailtext text], [_passwordtext text] ];
         
-        NSString *login=[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         
-        [obj GlobalDict:login Globalstr:@"array" Withblock:^(id result, NSError *error)
-         {
-             
-             _Arry1 =[[NSMutableArray alloc]init];
-             
-             _Arry1=[result mutableCopy];
-             
-             _userid=[_Arry1 valueForKey:@"user_id"];
-             NSLog(@"userid%@",_userid);
-             
-             if ([[_Arry1 valueForKey:@"message"]isEqualToString:@"successfully logged in"]) {
-                 
-                 SearchViewController *srch = (SearchViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"searchView"];
-                 
-                 [self.navigationController pushViewController:srch animated:YES];
-                 
-                 
-                 NSString *url1 = [NSString stringWithFormat:@"%@json_output.php?mode=profile_details&user_id=%@",App_Domain_Url,_userid];
-                 
-                 [obj GlobalDict:url1 Globalstr:@"array" Withblock:^(id result, NSError *error)
-                  {
-                      
-                      
-                      
-                      
-                      NSMutableArray *temp =[[NSMutableArray alloc]init];
-                      temp= [result mutableCopy];
-                      
-                      NSLog(@"userdetails%@",temp);
-                      
-                      [userinfo setValue:[temp valueForKey:@"id"] forKey:@"id"];
-                      [userinfo setValue:[temp valueForKey:@"user_email"] forKey:@"user_email"];
-                      [userinfo setValue:[temp valueForKey:@"user_nicename"] forKey:@"user_nicename"];
-                      [userinfo setValue:[temp valueForKey:@"user_registered"] forKey:@"user_registered"];
-                      [userinfo synchronize];
-                      
-                      NSString *Value = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_nicename"];
-                      NSLog(@"userinfo-%@",Value);
-                      
-                  }];
-                 
-                 
-                 
-             }
-             else
+            spinner.hidden=NO;
+            spinnerview.hidden=NO;
+            [spinner startAnimating];
+            
+            NSString *url = [NSString stringWithFormat:@"%@json_output.php?mode=wp_check_email_password&user_login=%@&user_password=%@",App_Domain_Url,[_emailtext text], [_passwordtext text] ];
+            
+            
+            
+            NSString *login=[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            
+            [obj GlobalDict:login Globalstr:@"array" Withblock:^(id result, NSError *error)
              {
-                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Faild"
-                                                                 message:[_Arry1 valueForKey:@"message"]
-                                                                delegate:self
-                                                       cancelButtonTitle:@"Cancel"
-                                                       otherButtonTitles:nil,nil];
-                 [alert show];
-             }
-             
-             
-             // NSLog(@"Arry1%@",_Arry1);
-             
-             
-         }];
+                 if ([[result valueForKey:@"message"]isEqualToString:@"successfully logged in"])
+                 {
+                     _Arry1 =[[NSMutableArray alloc]init];
+                     _Arry1=[result mutableCopy];
+                     
+                     
+                     
+                     _userid=[_Arry1 valueForKey:@"user_id"];
+                     
+                     NSLog(@"userid%@",_userid);
+                     
+                     
+                     SearchViewController *srch = (SearchViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"searchView"];
+                     
+                     
+                     
+                     [self.navigationController pushViewController:srch animated:YES];
+                     
+                     NSString *url1 = [NSString stringWithFormat:@"%@json_output.php?mode=profile_details&user_id=%@",App_Domain_Url,_userid];
+                     
+                     NSString* encodedUrl = [url1 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     [obj GlobalDict:encodedUrl Globalstr:@"array" Withblock:^(id result, NSError *error)
+                      
+                      {
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                          //chng something
+                          
+                         // NSMutableArray *temp =[[NSMutableArray alloc]init];
+                          
+                          
+                          NSMutableArray *temp;
+                          temp= [result mutableCopy];
+                          
+                          
+                          
+                          NSLog(@"userdetails%@",temp);
+                          
+                          
+                          
+                          [userinfo setValue:[temp valueForKey:@"id"] forKey:@"id"];
+                          
+                          [userinfo setValue:[temp valueForKey:@"user_email"] forKey:@"user_email"];
+                          
+                          [userinfo setValue:[temp valueForKey:@"user_nicename"] forKey:@"user_nicename"];
+                          
+                          [userinfo setValue:[temp valueForKey:@"user_registered"] forKey:@"user_registered"];
+                          
+                          [userinfo setValue:[temp valueForKey:@"address"] forKey:@"address"];
+                          
+                          [userinfo setValue:[temp valueForKey:@"country"] forKey:@"country"];
+                          
+                          [userinfo setValue:[temp valueForKey:@"town"] forKey:@"town"];
+                          
+                          [userinfo setValue:[temp valueForKey:@"post_code"] forKey:@"post_code"];
+                          
+                          
+                          
+                          [userinfo synchronize];
+                          
+                          
+                          
+                          NSString *Value = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_nicename"];
+                          
+                          NSLog(@"userinfo-%@",Value);
+                          
+                          
+                          
+                      }];
+                     
+                     
+                     
+                     
+                 }
+                 
+                 else
+                 {
+                     
+                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Faild" message:[result valueForKey:@"message"] delegate:self  cancelButtonTitle:@"OK"  otherButtonTitles:nil,nil];
+                     [alert show];
+                     spinner.hidden=YES;
+                     spinnerview.hidden=YES;
+                     
+                     
+                 }
+                 
+             }];
+        
+        
+        
     }
     
+    
+    
+    
 }
+
+- (IBAction)forgotbtnTap:(id)sender
+{
+    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    ForgotPassword  *forgot = [story instantiateViewControllerWithIdentifier:@"forgot"];
+    
+    [self.navigationController pushViewController:forgot animated:YES];
+    
+    
+}
+
+
 
 
 -(NSString *)TarminateWhiteSpace:(NSString *)Str

@@ -8,6 +8,7 @@
 
 #import "AddadvertisementViewController.h"
 #import "MPAddPropertyAdd.h"
+#import "AppDelegate.h"
 
 @interface AddadvertisementViewController ()<UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
 {
@@ -15,7 +16,7 @@
     NSMutableArray *data2;
     NSMutableArray *data3;
     NSMutableArray *data4;
-    NSMutableArray *temp;
+    NSMutableDictionary *temp,*coredataarray;
     NSString *holedata;
     UIView *polygonView;
     NSString *rentofproperty;
@@ -30,6 +31,9 @@
     NSString *price1;
     NSString *saleofproperty1;
     NSMutableArray *finaldata1,*finaldata2,*finaldata3,*finaldata4;
+    UIActivityIndicatorView *spinner;
+    AppDelegate *appDelegate;
+    
     
     
     BOOL finalmove;
@@ -50,19 +54,20 @@
     data2=[[NSMutableArray alloc]init];
     data3=[[NSMutableArray alloc]init];
     data4=[[NSMutableArray alloc]init];
-    temp=[[NSMutableArray alloc]init];
+    temp=[[NSMutableDictionary alloc]init];
+    appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
     _pricetextfield.delegate=self;
     _pricetextfield.autocorrectionType = UITextAutocorrectionTypeNo;
     _pricetextfield.text=_prevprice;
-    polygonView = [[UIView alloc] initWithFrame: CGRectMake ( 0, 0, self.view.bounds.size.width,self.view.bounds.size.height )];
-    polygonView.backgroundColor=[UIColor blackColor];
-    polygonView.alpha=0.3;
-    [self.view addSubview:polygonView];
-    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    spinner.frame = CGRectMake(round((self.view.frame.size.width - 25) / 2), round((self.view.frame.size.height - 25) / 2), 25, 25);
-     [polygonView addSubview:spinner];
+    //polygonView = [[UIView alloc] initWithFrame: CGRectMake ( 0, 0, self.view.bounds.size.width,self.view.bounds.size.height )];
+    //polygonView.backgroundColor=[UIColor blackColor];
+    //polygonView.alpha=0.3;
+    //[self.view addSubview:polygonView];
+    //spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    //spinner.frame = CGRectMake(round((self.view.frame.size.width - 25) / 2), round((self.view.frame.size.height - 25) / 2), 25, 25);
+    //[polygonView addSubview:spinner];
     
-    [spinner startAnimating];
+    //[spinner startAnimating];
     if ([_chkdata isEqualToString:@"S"])
     {
         _pagetitle.text=@"Add Property Advertisements For Sell";
@@ -118,16 +123,38 @@
     }
     
     
+    [self getdatafromurl];
+    
+    
+    [self.view addSubview:_myview];
+    [_myview addSubview:_mainpicker];
+    _myview.hidden=YES;
+    _mainpicker.hidden=YES;
+    
+    NSLog(@"button%@",_mypropertyRent);
+    NSLog(@"button%@",_mypropertySell);
+    NSLog(@"button%@",_editforRent);
+    NSLog(@"button%@",_editforSell);
+    
+    NSLog(@"propertyid%@",_property_id);
+    
+    
+}
+
+
+-(void)getdatafromurl
+{
     NSString *url1 = [NSString stringWithFormat:@"%@json_output.php?mode=price_parameters",App_Domain_Url];
     [obj GlobalDict:url1 Globalstr:@"array" Withblock:^(id result, NSError *error)
      {
-      
+         
          NSLog(@"price %@",result);
          temp=[result mutableCopy];
+         
          data1=[temp valueForKey:@"rent_to_property"];
          finaldata1=[data1 valueForKey:@"value"];
          data1=[data1 valueForKey:@"name"];
-        
+         
          data2=[temp valueForKey:@"rental_term"];
          finaldata2=[data2 valueForKey:@"value"];
          data2=[data2 valueForKey:@"name"];
@@ -135,8 +162,8 @@
          data3=[temp valueForKey:@"property_contents"];
          finaldata3=[data3 valueForKey:@"value"];
          data3=[data3 valueForKey:@"name"];
-        
-        
+         
+         
          data4=[temp valueForKey:@"sale_of_property"];
          finaldata4=[data4 valueForKey:@"value"];
          data4=[data4 valueForKey:@"name"];
@@ -148,13 +175,40 @@
          [spinner stopAnimating];
          [spinner removeFromSuperview];
          [polygonView removeFromSuperview];
-    }];
-    
-    
-    [self.view addSubview:_myview];
-    [_myview addSubview:_mainpicker];
-    _myview.hidden=YES;
-    _mainpicker.hidden=YES;
+     }];
+}
+
+
+
+
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (textField==_pricetextfield)
+    {
+        _pricetextfield.keyboardType=UIKeyboardTypeNumberPad;
+        UIToolbar *toolBar3=[[UIToolbar alloc]init];
+        [toolBar3 sizeToFit];
+        toolBar3.backgroundColor=[UIColor grayColor];
+        UIBarButtonItem *done2=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(DoneButtonPress:)];
+        done2.tintColor=[UIColor blackColor];
+        UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:Nil];
+        
+        UIBarButtonItem *done3=[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPress:)];
+        done3.tintColor=[UIColor blackColor];
+        
+        [toolBar3 setItems:@[done3,space, done2]];
+        [self.pricetextfield setInputAccessoryView:toolBar3];
+    }
+}
+
+-(void)DoneButtonPress:(id)sender
+{
+    [_pricetextfield resignFirstResponder];
+}
+-(void)cancelButtonPress:(id)sender
+{
+    [_pricetextfield resignFirstResponder];
     
 }
 
@@ -162,12 +216,12 @@
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     
-        return 1;
+    return 1;
     
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    if (_mainpicker.tag==1)
+    if (_mainpicker.tag==1 && data1.count>0)
     {
         return [data1 count];
     }
@@ -190,7 +244,7 @@
 {
     if(_mainpicker.tag==1)
     {
-    return [data1 objectAtIndex:row];
+        return [data1 objectAtIndex:row];
     }
     else if (_mainpicker.tag==2)
     {
@@ -208,28 +262,28 @@
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    if (_mainpicker.tag==1)
+    if (_mainpicker.tag==1 && data1.count>0)
     {
         self.PMlabel.text=[data1 objectAtIndex:row];
         rentofproperty=_PMlabel.text;
         rentofproperty1=[finaldata1 objectAtIndex:row];
         holedata=[data1 objectAtIndex:row];
     }
-    else if(_mainpicker.tag==2)
+    else if(_mainpicker.tag==2 && data2.count>0)
     {
         self.monthslabel.text=[data2 objectAtIndex:row];
         rentalterm=_monthslabel.text;
         rentalterm1=[finaldata2 objectAtIndex:row];
         holedata=[data2 objectAtIndex:row];
     }
-    else if (_mainpicker.tag==3)
+    else if (_mainpicker.tag==3 && data3.count>0)
     {
         self.furnishedlabel.text=[data3 objectAtIndex:row];
         propertycontent=_furnishedlabel.text;
         propertycontent1=[finaldata3 objectAtIndex:row];
         holedata=[data3 objectAtIndex:row];
     }
-    else if (_mainpicker.tag==4)
+    else if (_mainpicker.tag==4 && data4.count>0)
     {
         _offerslabel.text=[data4 objectAtIndex:row];
         saleofproperty=_offerslabel.text;
@@ -246,14 +300,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 - (IBAction)pmbutton:(id)sender
 {
@@ -265,7 +319,10 @@
     _mainpicker.dataSource=self;
     _mainpicker.tag=1;
     _pmbutton.tag=1;
-    holedata=[data1 objectAtIndex:0];
+    if(data1.count>0)
+    {
+        holedata=[data1 objectAtIndex:0];
+    }
     _PMlabel.text=holedata;
     rentofproperty=_PMlabel.text;
     rentofproperty1=[finaldata1 objectAtIndex:0];
@@ -276,14 +333,17 @@
 - (IBAction)monthsbutton:(id)sender
 {
     [_pricetextfield resignFirstResponder];
-     holedata=[[NSString alloc]init];
+    holedata=[[NSString alloc]init];
     _myview.hidden=NO;
     _mainpicker.hidden=NO;
     _mainpicker.delegate=self;
     _mainpicker.dataSource=self;
     _mainpicker.tag=2;
     _monthsbutton.tag=2;
-    holedata=[data2 objectAtIndex:0];
+    if(data2.count>0)
+    {
+        holedata=[data2 objectAtIndex:0];
+    }
     _monthslabel.text=holedata;
     rentalterm=_monthslabel.text;
     rentalterm1=[finaldata2 objectAtIndex:0];
@@ -293,16 +353,19 @@
 - (IBAction)furnishedbutton:(id)sender
 {
     [_pricetextfield resignFirstResponder];
-     holedata=[[NSString alloc]init];
+    holedata=[[NSString alloc]init];
     _myview.hidden=NO;
     _mainpicker.hidden=NO;
     _mainpicker.delegate=self;
     _mainpicker.dataSource=self;
     _mainpicker.tag=3;
     _furnishedbutton.tag=3;
-    holedata=[data3 objectAtIndex:0];
+    if(data3.count>0)
+    {
+        holedata=[data3 objectAtIndex:0];
+    }
     _furnishedlabel.text=holedata;
-     propertycontent=_furnishedlabel.text;
+    propertycontent=_furnishedlabel.text;
     propertycontent1=[finaldata3 objectAtIndex:0];
     [_mainpicker selectRow:0 inComponent:0 animated:YES];
 }
@@ -317,7 +380,10 @@
     _mainpicker.dataSource=self;
     _mainpicker.tag=4;
     _saleofpropertybutton.tag=3;
-    holedata=[data4 objectAtIndex:0];
+    if(data4.count>0)
+    {
+        holedata=[data4 objectAtIndex:0];
+    }
     _offerslabel.text=holedata;
     saleofproperty=_offerslabel.text;
     saleofproperty1=[finaldata4 objectAtIndex:0];
@@ -327,22 +393,22 @@
 
 - (IBAction)pickerdonebutton:(id)sender
 {
-   
-        if (_mainpicker.tag==1)
-        {
-            _PMlabel.text=holedata;
-            rentofproperty=_PMlabel.text;
-        }
-        else if (_mainpicker.tag==2)
-        {
-            _monthslabel.text=holedata;
-            rentalterm=_monthslabel.text;
-        }
-        else if (_mainpicker.tag==3)
-        {
-            _furnishedlabel.text=holedata;
-             propertycontent=_furnishedlabel.text;
-        }
+    
+    if (_mainpicker.tag==1)
+    {
+        _PMlabel.text=holedata;
+        rentofproperty=_PMlabel.text;
+    }
+    else if (_mainpicker.tag==2)
+    {
+        _monthslabel.text=holedata;
+        rentalterm=_monthslabel.text;
+    }
+    else if (_mainpicker.tag==3)
+    {
+        _furnishedlabel.text=holedata;
+        propertycontent=_furnishedlabel.text;
+    }
     
     _mainpicker.hidden=YES;
     _myview.hidden=YES;
@@ -353,7 +419,7 @@
 {
     _mainpicker.hidden=YES;
     _myview.hidden=YES;
-
+    
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -369,26 +435,40 @@
 }
 - (IBAction)nextbutton:(id)sender
 {
+    price=_pricetextfield.text;
     if (finalmove==false)
     {
-        price=_pricetextfield.text;
         NSLog(@"%@",rentofproperty1);
         NSLog(@"%@",rentalterm1);
         NSLog(@"%@", propertycontent1);
         if (([self TarminateWhiteSpace:_pricetextfield.text].length==0) || rentofproperty==NULL || rentalterm==NULL || propertycontent==NULL)
         {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Please enter all fields"
-                                                       message: @"All fields are mandatory"
-                                                      delegate: self
-                                             cancelButtonTitle:@"Cancel"
-                                             otherButtonTitles:nil,nil];
-        
+                                                           message: @"All fields are mandatory"
+                                                          delegate: self
+                                                 cancelButtonTitle:@"Cancel"
+                                                 otherButtonTitles:nil,nil];
+            
             [alert show];
-        
+            
         }
-        
-        MPAddPropertyAdd *mpadd = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"addproperty"];
-        [self.navigationController pushViewController:mpadd animated:YES];
+        else
+        {
+            MPAddPropertyAdd *mpadd = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"addproperty"];
+            mpadd.p_id=_property_id;
+            mpadd.addfinal_id=_advert_id;
+            mpadd.price_text = price;
+            mpadd.rentofproperty1 = rentofproperty1;
+            mpadd.rentalterm1 = rentalterm1;
+            mpadd.propertycontent1 = propertycontent1;
+            
+            mpadd.mypropertyRent=_mypropertyRent;
+            NSLog(@"push data%@",_mypropertySell);
+            mpadd.mypropertySell=_mypropertySell;
+            mpadd.editforSell=_editforSell;
+            mpadd.editforRent=_editforRent;
+            [self.navigationController pushViewController:mpadd animated:YES];
+        }
     }
     else if (finalmove==true)
     {
@@ -407,6 +487,16 @@
         else
         {
             MPAddPropertyAdd *mpadd = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"addproperty"];
+            mpadd.p_id=_property_id;
+            mpadd.addfinal_id=_advert_id;
+            mpadd.price_text = price;
+            NSLog(@"price for sell %@",mpadd.price_text);
+            mpadd.saleofproperty1 = saleofproperty1;
+            mpadd.mypropertyRent=_mypropertyRent;
+            NSLog(@"push data%@",_mypropertySell);
+            mpadd.mypropertySell=_mypropertySell;
+            mpadd.editforSell=_editforSell;
+            mpadd.editforRent=_editforRent;
             [self.navigationController pushViewController:mpadd animated:YES];
         }
     }

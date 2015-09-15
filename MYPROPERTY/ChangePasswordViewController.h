@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FW_JsonClass.h"
 
-@interface ChangePasswordViewController : UIViewController
+@interface ChangePasswordViewController : UIViewController<UITextFieldDelegate>
 {
     FW_JsonClass *obj;
     NSString *userid;

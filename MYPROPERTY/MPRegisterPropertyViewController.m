@@ -22,6 +22,15 @@
 @interface MPRegisterPropertyViewController ()
 
 
+{
+    IBOutlet UIImageView *topbar;
+    
+    IBOutlet UIButton *bkbtn;
+    IBOutlet UILabel *toplbl;
+}
+
+
+
 
 @property (strong, nonatomic) IBOutlet UIScrollView *mainscroll;
 
@@ -42,21 +51,48 @@
     Footer *footerView = [[Footer alloc]init];
     [footerView TapCheck:3];
     pickarry = [[NSArray alloc]init];
+    app=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     dict = [[NSMutableDictionary alloc]init];
+    //    longArray=[[NSMutableArray alloc]init];
+    //    latArray=[[NSMutableArray alloc]init];
     
     
-    _mainscroll.showsHorizontalScrollIndicator=NO;
-    _mainscroll.showsVerticalScrollIndicator = NO;
     
     // Do any additional setup after loading the view.
+    CGRect screenBounds=[[UIScreen mainScreen] bounds];
+    if (screenBounds.size.height == 568  && screenBounds.size.width == 320)
+    {
+        toplbl.frame =CGRectMake(60, 23, 201, 25);
+    }
+    
+    else  if (screenBounds.size.height == 667  && screenBounds.size.width == 375)
+    {
+        
+        
+        topbar.frame=CGRectMake(0, 0, 375, 70);
+        bkbtn.frame = CGRectMake(0, 0, 66, 70);
+        toplbl.frame =CGRectMake(85, 30, 201, 25);
+        
+        
+    }
+    else if (screenBounds.size.height ==736  && screenBounds.size.width == 414)
+    {
+        topbar.frame=CGRectMake(0, 0, 414, 78);
+        bkbtn.frame = CGRectMake(0, 0, 66, 78);
+        toplbl.frame =CGRectMake(85, 30, 201, 25);
+    }
+    
     
     [_mainscroll setContentSize:CGSizeMake(self.view.frame.size.width, 922)];
     
-    _mainscroll.showsVerticalScrollIndicator = YES;
+    [_mainscroll setShowsHorizontalScrollIndicator:NO];
+    [_mainscroll setShowsVerticalScrollIndicator:NO];
     
     [pview setBackgroundColor:[[UIColor whiteColor] colorWithAlphaComponent:1]];
     _picCodesrch.delegate=self;
+    propertyfulldescription.autocorrectionType = UITextAutocorrectionTypeNo;
+    propertysummary.autocorrectionType = UITextAutocorrectionTypeNo;
     
     //    myPickerView = [[UIPickerView alloc] init];
     
@@ -70,71 +106,169 @@
     
     
     Array_1 = [[NSMutableArray alloc] init];
-    
-    
-    
-    // Add some data for demo purposes.
-    
-    [Array_1 addObject:@"Manager"];
-    
-    [Array_1 addObject:@"Owner"];
-    
-    [Array_1 addObject:@"Tenant"];
-    
-    
-    
     Array_2 = [[NSMutableArray alloc] init];
     
-    
-    
-    // Add some data for demo purposes.
-    
-    [Array_2 addObject:@"Bungalows"];
-    
-    [Array_2 addObject:@"Commercial Property"];
-    
-    [Array_2 addObject:@"Flat/Amartment"];
-    
-    [Array_2 addObject:@"Houses"];
-    
-    [Array_2 addObject:@"Land"];
-    
-    
     Array_3 = [[NSMutableArray alloc] init];
-    
-    [Array_3 addObject:@"Availbe"];
-    
-    [Array_3 addObject:@"Rented"];
-    
     Array_4 = [[NSMutableArray alloc] init];
     
-    [Array_4 addObject:@"1"];
+    Arryid1= [[NSMutableArray alloc]init];
+    Arryid2 = [[NSMutableArray alloc]init];
+    Arryid3 = [[NSMutableArray alloc]init];
+    Arryid4 = [[NSMutableArray alloc]init];
     
-    [Array_4 addObject:@"2"];
-    
-    [Array_4 addObject:@"3"];
-    
-    [Array_4 addObject:@"4"];
-    
-    [Array_4 addObject:@"5"];
+    parkingflg=@"N";
+    gardenflag=@"N";
+    parking.onTintColor = [UIColor colorWithRed:58.0/255.0 green:85.0/255.0 blue:140.0/255.0 alpha:1.0];
+    gardenflg.onTintColor = [UIColor colorWithRed:58.0/255.0 green:85.0/255.0 blue:140.0/255.0 alpha:1.0];
     
     
     [parking addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
     
     [gardenflg addTarget:self action:@selector(changeSwitch1:) forControlEvents:UIControlEventValueChanged];
-    parkingflg=@"N";
-    gardenflag=@"N";
+    
+    UIView *polygonView = [[UIView alloc] initWithFrame: CGRectMake ( 0, 0, self.view.bounds.size.width,self.view.bounds.size.height )];
+    polygonView.backgroundColor=[UIColor blackColor];
+    polygonView.alpha=0.3;
+    [self.view addSubview:polygonView];
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    spinner.frame = CGRectMake(round((self.view.frame.size.width - 25) / 2), round((self.view.frame.size.height - 25) / 2), 25, 25);
+    
+    [polygonView addSubview:spinner];
+    
+    NSString *url = [NSString stringWithFormat:@"%@json_output.php?mode=search_values",App_Domain_Url];
+    [spinner startAnimating];
+    
+    NSManagedObjectContext *context = [app managedObjectContext];
+    NSEntityDescription *entityDesc =[NSEntityDescription entityForName:@"Mpregister"inManagedObjectContext:context];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDesc];
+    
+    NSError *error;
+    NSArray *objects1 = [context executeFetchRequest:request
+                                               error:&error];
     
     
+    if (objects1.count==0)
+    {
+        
+        [obj GlobalDict:url Globalstr:@"array" Withblock:^(id result, NSError *error)
+         {
+             
+             // NSLog(@"result....%@",result);
+             NSMutableDictionary *temp = [[NSMutableDictionary alloc]init];
+             temp = [result mutableCopy];
+             Array_1 = [[temp valueForKey:@"relation"]valueForKey:@"relation_name"];
+             // Array_1 = [Array_1 valueForKey:@"relation_name"];
+             
+             NSData *coredata1 = [NSKeyedArchiver archivedDataWithRootObject:Array_1];
+             NSManagedObjectContext *context1=[app managedObjectContext];
+             NSManagedObject *newUser1=[NSEntityDescription insertNewObjectForEntityForName:@"Mpregister" inManagedObjectContext:context1];
+             [newUser1 setValue:coredata1 forKey:@"data1"];
+             [app saveContext];
+             
+             
+             Arryid1 = [[temp valueForKey:@"relation"] valueForKey:@"id"];
+             
+             
+             NSData *coredata1id = [NSKeyedArchiver archivedDataWithRootObject:Arryid1];
+             NSManagedObjectContext *context1id=[app managedObjectContext];
+             NSManagedObject *newUser1id=[NSEntityDescription insertNewObjectForEntityForName:@"Mpregister" inManagedObjectContext:context1id];
+             [newUser1id setValue:coredata1id forKey:@"data1id"];
+             [app saveContext];
+             
+             
+             NSLog(@"arry1.....%@",Array_1);
+             
+             Array_2 = [[temp valueForKey:@"type"]valueForKey:@"type_name"];
+             
+             
+             
+             
+             
+             NSData *coredata2 = [NSKeyedArchiver archivedDataWithRootObject:Array_2];
+             NSManagedObjectContext *context2=[app managedObjectContext];
+             NSManagedObject *newUser2=[NSEntityDescription insertNewObjectForEntityForName:@"Mpregister" inManagedObjectContext:context2];
+             [newUser2 setValue:coredata2 forKey:@"data2"];
+             [app saveContext];
+             
+             
+             
+             
+             
+             
+             
+             
+             Arryid2 =[[temp valueForKey:@"type"]valueForKey:@"id"];
+             
+             
+             
+             NSData *coredata2id = [NSKeyedArchiver archivedDataWithRootObject:Arryid2];
+             NSManagedObjectContext *context2id=[app managedObjectContext];
+             NSManagedObject *newUser2id=[NSEntityDescription insertNewObjectForEntityForName:@"Mpregister" inManagedObjectContext:context2id];
+             [newUser2id setValue:coredata2id forKey:@"data2id"];
+             [app saveContext];
+             
+             
+             
+             
+             
+             
+             Array_3 = [[temp valueForKey:@"status"]valueForKey:@"status_val"];
+             
+             NSData *coredata3= [NSKeyedArchiver archivedDataWithRootObject:Array_3];
+             NSManagedObjectContext *context3=[app managedObjectContext];
+             NSManagedObject *newUser3=[NSEntityDescription insertNewObjectForEntityForName:@"Mpregister" inManagedObjectContext:context3];
+             [newUser3 setValue:coredata3 forKey:@"data3"];
+             [app saveContext];
+             
+             
+             
+             Arryid3 = [[temp valueForKey:@"status"]valueForKey:@"id"];
+             
+             
+             NSData *coredata3id = [NSKeyedArchiver archivedDataWithRootObject:Arryid3];
+             NSManagedObjectContext *context3id=[app managedObjectContext];
+             NSManagedObject *newUser3id=[NSEntityDescription insertNewObjectForEntityForName:@"Mpregister" inManagedObjectContext:context3id];
+             [newUser3id setValue:coredata3id forKey:@"data3id"];
+             [app saveContext];
+             
+             
+             Array_4 = [[temp valueForKey:@"room"]valueForKey:@"number_of_rooms"];
+             //Array_4 = [Array_4 valueForKey:@"number_of_rooms"];
+             
+             NSData *coredata4= [NSKeyedArchiver archivedDataWithRootObject:Array_4];
+             NSManagedObjectContext *context4=[app managedObjectContext];
+             NSManagedObject *newUser4=[NSEntityDescription insertNewObjectForEntityForName:@"Mpregister" inManagedObjectContext:context4];
+             [newUser4 setValue:coredata4 forKey:@"data4"];
+             [app saveContext];
+             
+             
+             [spinner stopAnimating];
+             [spinner removeFromSuperview];
+             [polygonView removeFromSuperview];
+             
+         } ];
+        
+        
+    }
     
     
+    else
+    {
+        [self coredata];
+        [spinner stopAnimating];
+        [spinner removeFromSuperview];
+        [polygonView removeFromSuperview];
+    }
     myPickerView.tag=1;
     
     myPickerView.hidden=YES;
     pview.hidden=YES;
     CGRect scr= pview.frame;
+    [self.view addSubview:pview];
+    [pview addSubview:myPickerView];
     
-    CGRect screenBounds=[[UIScreen mainScreen] bounds];
+    // CGRect screenBounds=[[UIScreen mainScreen] bounds];
     if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
         
     {
@@ -142,6 +276,15 @@
         pview.frame=scr;
     }
     else if (screenBounds.size.height == 667  && screenBounds.size.width == 375)
+    {
+        scr.origin.y=self.view.bounds.size.height-scr.size.height;
+        pview.frame=scr;
+        
+        
+        // pview.frame=CGRectMake(0, self.view.frame.origin.y+ 420, 375, 200);
+        
+    }
+    else if (screenBounds.size.height ==736  && screenBounds.size.width == 414)
     {
         scr.origin.y=self.view.bounds.size.height-scr.size.height;
         pview.frame=scr;
@@ -154,24 +297,169 @@
     
 }
 
+
+
+
+
+-(void)coredata
+{
+    
+    NSManagedObjectContext *context0 = [app managedObjectContext];
+    NSEntityDescription *entityDesc0 =[NSEntityDescription entityForName:@"Mpregister"inManagedObjectContext:context0];
+    NSFetchRequest *request0 = [[NSFetchRequest alloc] init];
+    [request0 setEntity:entityDesc0];
+    
+    NSError *error;
+    NSArray *objects0 = [context0 executeFetchRequest:request0
+                                                error:&error];
+    
+    objects0 = [NSKeyedUnarchiver unarchiveObjectWithData:[[objects0 objectAtIndex:0]valueForKey:@"data1"]];
+    
+    [Array_1 addObjectsFromArray:objects0];
+    
+    
+    
+    
+    NSManagedObjectContext *context01 = [app managedObjectContext];
+    NSEntityDescription *entityDesc01 =[NSEntityDescription entityForName:@"Mpregister"inManagedObjectContext:context01];
+    NSFetchRequest *request01 = [[NSFetchRequest alloc] init];
+    [request01 setEntity:entityDesc01];
+    
+    NSArray *objects01 = [context01 executeFetchRequest:request01
+                                                  error:&error];
+    
+    objects01 = [NSKeyedUnarchiver unarchiveObjectWithData:[[objects01 objectAtIndex:1]valueForKey:@"data1id"]];
+    
+    [Arryid1 addObjectsFromArray:objects01];
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    NSManagedObjectContext *context = [app managedObjectContext];
+    NSEntityDescription *entityDesc =[NSEntityDescription entityForName:@"Mpregister"inManagedObjectContext:context];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDesc];
+    
+    // NSError *error;
+    NSArray *objects = [context executeFetchRequest:request
+                                              error:&error];
+    
+    objects = [NSKeyedUnarchiver unarchiveObjectWithData:[[objects objectAtIndex:2]valueForKey:@"data2"]];
+    
+    [Array_2 addObjectsFromArray:objects];
+    
+    
+    
+    
+    NSManagedObjectContext *context1 = [app managedObjectContext];
+    NSEntityDescription *entityDesc1 =[NSEntityDescription entityForName:@"Mpregister"inManagedObjectContext:context1];
+    NSFetchRequest *request1 = [[NSFetchRequest alloc] init];
+    [request1 setEntity:entityDesc1];
+    
+    
+    NSArray *objects1 = [context1 executeFetchRequest:request1
+                                                error:&error];
+    
+    objects1 = [NSKeyedUnarchiver unarchiveObjectWithData:[[objects1 objectAtIndex:3]valueForKey:@"data2id"]];
+    
+    [Arryid2 addObjectsFromArray:objects1];
+    
+    
+    
+    
+    
+    
+    
+    NSManagedObjectContext *context2 = [app managedObjectContext];
+    NSEntityDescription *entityDesc2 =[NSEntityDescription entityForName:@"Mpregister"inManagedObjectContext:context2];
+    NSFetchRequest *request2 = [[NSFetchRequest alloc] init];
+    [request2 setEntity:entityDesc2];
+    
+    
+    NSArray *objects2 = [context2 executeFetchRequest:request2
+                                                error:&error];
+    
+    objects2 = [NSKeyedUnarchiver unarchiveObjectWithData:[[objects2 objectAtIndex:4]valueForKey:@"data3"]];
+    
+    [Array_3 addObjectsFromArray:objects2];
+    
+    
+    
+    
+    NSManagedObjectContext *context2id = [app managedObjectContext];
+    NSEntityDescription *entityDesc2id =[NSEntityDescription entityForName:@"Mpregister"inManagedObjectContext:context2id];
+    NSFetchRequest *request2id = [[NSFetchRequest alloc] init];
+    [request2id setEntity:entityDesc2id];
+    
+    NSArray *objects2id = [context2id executeFetchRequest:request2id
+                                                    error:&error];
+    
+    objects2id = [NSKeyedUnarchiver unarchiveObjectWithData:[[objects2id objectAtIndex:5]valueForKey:@"data3id"]];
+    
+    [Arryid3 addObjectsFromArray:objects2id];
+    
+    
+    
+    
+    
+    
+    
+    
+    NSManagedObjectContext *context3 = [app managedObjectContext];
+    NSEntityDescription *entityDesc3 =[NSEntityDescription entityForName:@"Mpregister"inManagedObjectContext:context3];
+    NSFetchRequest *request3 = [[NSFetchRequest alloc] init];
+    [request3 setEntity:entityDesc3];
+    
+    
+    NSArray *objects3 = [context3 executeFetchRequest:request
+                                                error:&error];
+    
+    objects3 = [NSKeyedUnarchiver unarchiveObjectWithData:[[objects3 objectAtIndex:6]valueForKey:@"data4"]];
+    
+    [Array_4 addObjectsFromArray:objects3];
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
 - (void)changeSwitch:(id)sender{
     
     
-    if([sender isOn]){
+    if([sender isOn])
+    {
         parkingflg=@"Y";
+        NSLog(@"parking flg.....%@",parkingflg);
         
     }
     else
     {
         parkingflg= @"N";
+        NSLog(@"parking flg.....%@",parkingflg);
     }
 }
 - (void)changeSwitch1:(id)sender{
     
-    if([sender isOn]){
+    if([sender isOn])
+    {
         gardenflag=@"Y";
-    } else{
+        NSLog(@"garden flg.....%@",gardenflag);
+    }
+    else
+    {
         gardenflag = @"N";
+        NSLog(@"garden flg.....%@",gardenflag);
     }
 }
 
@@ -227,6 +515,9 @@
     //    pt.x=0;
     //    pt.y=0;
     //    [_mainscroll setContentOffset:pt animated:YES];
+    
+    
+    
     [textField resignFirstResponder];
     _mainscroll.scrollEnabled=YES;
     return YES;
@@ -238,9 +529,115 @@
     [self.view addSubview:pview];
     [pview addSubview:myPickerView];
     
-    if (_picCodesrch.text.length==6)
+    
+    arry = [[NSMutableArray alloc]init];
+    
+    /*
+     NSString *data = [NSString stringWithFormat:@"%@",[_picCodesrch text]];
+     NSString *pinurl = [NSString stringWithFormat:@"https://api.ideal-postcodes.co.uk/v1/postcodes/%@?api_key=ak_icn5cf40QkOlvzuWj8cWwTO4H2eAS",data];
+     
+     
+     UIView *polygonView = [[UIView alloc] initWithFrame: CGRectMake ( 0, 0, self.view.bounds.size.width,self.view.bounds.size.height )];
+     polygonView.backgroundColor=[UIColor blackColor];
+     polygonView.alpha=0.3;
+     [self.view addSubview:polygonView];
+     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+     spinner.frame = CGRectMake(round((self.view.frame.size.width - 25) / 2), round((self.view.frame.size.height - 25) / 2), 25, 25);
+     
+     [polygonView addSubview:spinner];
+     
+     
+     if (_picCodesrch.text.length==6)
+     
+     {
+     [spinner startAnimating];
+     [obj GlobalDict:pinurl Globalstr:@"array" Withblock:^(id result, NSError *error)
+     {
+     
+     if ([[result valueForKey:@"message"] isEqualToString:@"Success"])
+     {
+     
+     
+     //         [dict setObject:[result valueForKey:@"latitude"] forKey:@"Latitude"];
+     //         [dict setObject:[result valueForKey:@"longitude"] forKey:@"Longitude"];
+     
+     NSArray *array1 = (NSArray *) result[@"result"];
+     //  NSLog(@"arry1==========%lu",(unsigned long)array1.count);
+     for (int j=0; j<array1.count; j++)
+     {
+     NSDictionary *dic = (NSDictionary *) [array1 objectAtIndex:j];
+     NSString *str =(NSString *) [NSString stringWithFormat:@"%@",[dic valueForKey:@"line_1" ]];
+     NSString *str1=(NSString *) [NSString stringWithFormat:@"%@",[dic valueForKey:@"post_town"]];
+     NSString *str2=(NSString *) [NSString stringWithFormat:@"%@",[dic valueForKey:@"traditional_county"]];
+     
+     
+     //             [dict setObject:[dic valueForKey:@"longitude"] forKey:@"Longitude"];
+     //             [dict setObject:[dic valueForKey:@"latitude"] forKey:@"Latitude"];
+     
+     //[list insertObject:str atIndex:j];
+     NSLog(@"Str============%@",str);
+     NSLog(@"Str1============%@",str1);
+     NSLog(@"Str2=============%@",str2);
+     NSString *final = (NSString *)[NSString stringWithFormat:@"%@,%@,%@",str,str1,str2];
+     NSLog(@"final============%@",final);
+     
+     [arry insertObject:final atIndex:j];
+     [longArray insertObject:[dic valueForKey:@"longitude"] atIndex:j];
+     [latArray insertObject:[dic valueForKey:@"latitude"] atIndex:j];
+     }
+     
+     NSLog(@"List========%@",arry);
+     
+     
+     
+     
+     myPickerView.tag=10;
+     btntag=10;
+     myPickerView.hidden=NO;
+     pview.hidden=NO;
+     myPickerView.dataSource = self;
+     myPickerView.delegate = self;
+     
+     [polygonView removeFromSuperview];
+     
+     }
+     else
+     {
+     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+     message:@"Pincode Not found"
+     delegate:self
+     cancelButtonTitle:@"OK"
+     otherButtonTitles:nil];
+     [alert show];
+     [polygonView removeFromSuperview];
+     }
+     
+     
+     
+     }];
+     }
+     
+     else
+     {
+     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+     message:@"Pincode Not found"
+     delegate:self
+     cancelButtonTitle:@"OK"
+     otherButtonTitles:nil];
+     [alert show];
+     [polygonView removeFromSuperview];
+     }
+     
+     
+     
+     
+     */
+    
+    
+    
+    if (_picCodesrch.text.length>0)
     {
-        
+        [_picCodesrch resignFirstResponder];
         UIView *polygonView = [[UIView alloc] initWithFrame: CGRectMake ( 0, 0, self.view.bounds.size.width,self.view.bounds.size.height )];
         polygonView.backgroundColor=[UIColor blackColor];
         polygonView.alpha=0.3;
@@ -253,18 +650,18 @@
         
         NSString *data = [NSString stringWithFormat:@"%@",[_picCodesrch text]];
         NSLog(@"data%@",data);
-        NSString *pinurl = [NSString stringWithFormat:@"https://api.getaddress.io/v2/uk/%@?api-key=H3JfLc3p4EyGk_vZ1gNJjg1041",data];
+        NSString *pinurl = [NSString stringWithFormat:@"https://api.getaddress.io/v2/uk/%@?api-key=NJx8d6WMR0qqjqGnb2gZAA1360",data];
         [spinner startAnimating];
         [obj GlobalDict:pinurl Globalstr:@"array" Withblock:^(id result, NSError *error)
          {
-             [_picCodesrch resignFirstResponder];
+             
              
              if ([[result valueForKey:@"Message"] isEqualToString:@"Bad Request"]) {
                  
                  
                  
                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                 message:@"Pincode Not found"
+                                                                 message:[result valueForKey:@"Message"]
                                                                 delegate:self
                                                        cancelButtonTitle:@"OK"
                                                        otherButtonTitles:nil];
@@ -272,6 +669,26 @@
                  
                  
              }
+             else if ([[result valueForKey:@"Message"] isEqualToString:@"You account has expired. Please upgrade your account."])
+             {
+                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                 message:[result valueForKey:@"Message"]
+                                                                delegate:self
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil];
+                 [alert show];
+             }
+             
+             else if ([[result valueForKey:@"Message"] isEqualToString:@"Not Found"])
+             {
+                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                 message:[result valueForKey:@"Message"]
+                                                                delegate:self
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil];
+                 [alert show];
+             }
+             
              
              else
              {
@@ -279,32 +696,31 @@
                  [dict setObject:[result valueForKey:@"Latitude"] forKey:@"Latitude"];
                  [dict setObject:[result valueForKey:@"Longitude"] forKey:@"Longitude"];
                  
-                 _pincodeArray = [result valueForKey:@"Addresses"];
-                 // NSLog(@"Pincode%@",_pincodeArray);
+                 _pincodeArray = [[result valueForKey:@"Addresses"]mutableCopy];
+                 
                  for (int i=0; i<_pincodeArray.count; i++) {
                      
                      
                      
-                     //             if ([_pincodeArray[i] containsString:@","]) {
-                     NSString *check = [NSString stringWithFormat:@", , , , , "];
                      
-                     NSString *temp  = [NSString stringWithFormat:@"%@",_pincodeArray[i]];
+                     NSString *text = [NSString stringWithFormat:@"%@",_pincodeArray[i]];
                      
-                     //  NSString *addrs = [NSString stringWithFormat:@"1 Quaves Road, , , , , Slough, Berkshire"];
-                     newAddress=[temp stringByReplacingOccurrencesOfString:check withString:@","];
+                     NSString *check = [text stringByReplacingOccurrencesOfString:@" ," withString:@""];
                      
                      
-                     // NSLog(@"working..............%@",newAddress);
+                     [arry insertObject:check atIndex:i];
                      
-                     [arry insertObject:newAddress atIndex:i];
-                     
-                     //
-                     //                 [_pincodeArray[i] addObject:newAddress];
-                     //                 NSLog(@"pin%@",_pincodeArray);
                      
                      
                      
                  }
+                 
+                 
+                 
+                 
+                 
+                 
+                 
                  
                  NSLog(@"arry ....%@",arry);
                  
@@ -317,6 +733,10 @@
                  pincodelbl.text =_picCodesrch.text;
                  
              }
+             
+             
+             
+             
              // }
              [spinner stopAnimating];
              [spinner removeFromSuperview];
@@ -346,11 +766,14 @@
         
     }
     
+    
 }
 
 - (IBAction)btn1:(id)sender {
     holedata=[[NSString alloc]init];
     holedata=[Array_1 objectAtIndex:0];
+    sndid1 = Arryid1[0];
+    
     myPickerView.tag=1;
     myPickerView.hidden=NO;
     pview.hidden=NO;
@@ -380,6 +803,7 @@
     [propertysummary resignFirstResponder];
     holedata=[[NSString alloc]init];
     holedata=[Array_2 objectAtIndex:0];
+    sndid2 = Arryid2[0];
     myPickerView.tag=2;
     myPickerView.hidden=NO;
     pview.hidden=NO;
@@ -410,6 +834,7 @@
     [propertysummary resignFirstResponder];
     holedata=[[NSString alloc]init];
     holedata=[Array_3 objectAtIndex:0];
+    sndid3 = Arryid3[0];
     myPickerView.tag=3;
     myPickerView.hidden=NO;
     pview.hidden=NO;
@@ -510,33 +935,33 @@
     btn6.hidden=NO;
     
     
-    //    CGRect screenBounds=[[UIScreen mainScreen] bounds];
-    //    if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
-    //
-    //    {
-    //        CGRect rc=[_mainscroll bounds];
-    //        CGPoint pt;
-    //        rc=[_mainscroll convertRect:rc toView:_mainscroll];
-    //
-    //        pt=rc.origin;
-    //        pt.x=0;
-    //        pt.y+=200;
-    //        [_mainscroll setContentOffset:pt animated:YES];
-    //
-    //    }
-    //    else
-    //    {
-    //        CGRect rc=[_mainscroll bounds];
-    //        CGPoint pt;
-    //        rc=[_mainscroll convertRect:rc toView:_mainscroll];
-    //
-    //        pt=rc.origin;
-    //        pt.x=0;
-    //        pt.y+=100;
-    //        [_mainscroll setContentOffset:pt animated:YES];
-    //
-    //
-    //    }
+    CGRect screenBounds=[[UIScreen mainScreen] bounds];
+    if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
+        
+    {
+        CGRect rc=[_mainscroll bounds];
+        CGPoint pt;
+        rc=[_mainscroll convertRect:rc toView:_mainscroll];
+        
+        pt=rc.origin;
+        pt.x=0;
+        pt.y=200;
+        [_mainscroll setContentOffset:pt animated:YES];
+        
+    }
+    else
+    {
+        CGRect rc=[_mainscroll bounds];
+        CGPoint pt;
+        rc=[_mainscroll convertRect:rc toView:_mainscroll];
+        
+        pt=rc.origin;
+        pt.x=0;
+        pt.y=220;
+        [_mainscroll setContentOffset:pt animated:YES];
+        
+        
+    }
     
     [self.view addSubview:pview];
     [pview addSubview:myPickerView];
@@ -578,7 +1003,7 @@
         
         pt1=rc1.origin;
         pt1.x=0;
-        pt1.y=100;
+        pt1.y=200;
         [_mainscroll setContentOffset:pt1 animated:YES];
     }
     else  if (screenBounds.size.height == 568  && screenBounds.size.width == 320) {
@@ -601,19 +1026,19 @@
 - (IBAction)next:(id)sender
 {
     if (relationProperty.text.length==0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Relationship to property" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enter value ''Relationship to property''" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         
         [alert show];
     }
     else if (propertytypelbl.text.length==0) {
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Property Type" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enter ''Property Type''" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         
         [alert show];
     }
     else if (currentstatus.text.length==0)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Current Status" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enter ''Current Status''" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         
         [alert show];
     }
@@ -626,31 +1051,31 @@
     //    }
     else if (noofbed.text.length==0)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Number of Bedrooms" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enter ''Number of Bedrooms''" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         
         [alert show];
     }
     else if (noofbath.text.length==0)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Number of Bathrooms" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enter ''Number of Bathrooms''" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         
         [alert show];
     }
     else if (noofroom.text.length==0)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Number of Bathrooms" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enter ''Number of Bathrooms''" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         
         [alert show];
     }
     else if (propertysummary.text.length==0)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Property Summary Description" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enter ''Property Summary Description''" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         
         [alert show];
     }
     else if (propertyfulldescription.text.length==0)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Property Full Description" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enter ''Property Full Description''" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         
         [alert show];
     }
@@ -659,9 +1084,9 @@
     else
     {
         
-        [dict setObject:relationProperty.text forKey:@"rel_to_property"];
-        [dict setObject:propertytypelbl.text forKey:@"property_type"];
-        [dict setObject:currentstatus.text forKey:@"current_status"];
+        [dict setObject:sndid1 forKey:@"rel_to_property"];
+        [dict setObject:sndid2 forKey:@"property_type"];
+        [dict setObject:sndid3 forKey:@"current_status"];
         [dict setObject:addresslbl.text forKey:@"address1"];
         [dict setObject:townlbl.text forKey:@"town"];
         [dict setObject:countylbl.text forKey:@"county"];
@@ -826,7 +1251,10 @@ component
         
         holedata = [[NSString alloc] initWithFormat:
                     @"%@", [Array_1 objectAtIndex:row]];
-        NSLog(@"%@", holedata);
+        
+        sndid1 =[[NSString alloc] initWithFormat:
+                 @"%@", [Arryid1 objectAtIndex:row]];
+        NSLog(@"%@", sndid1);
         
     }
     
@@ -836,7 +1264,10 @@ component
         
         holedata = [[NSString alloc] initWithFormat:
                     @"%@", [Array_2 objectAtIndex:row]];
-        NSLog(@"%@", holedata);
+        sndid2 = [[NSString alloc] initWithFormat:
+                  @"%@", [Arryid2 objectAtIndex:row]];
+        
+        NSLog(@"%@", sndid2);
         
     }
     
@@ -848,7 +1279,10 @@ component
         
         holedata = [[NSString alloc] initWithFormat:
                     @"%@", [Array_3 objectAtIndex:row]];
-        NSLog(@"%@", holedata);
+        sndid3 = [[NSString alloc] initWithFormat:
+                  @"%@", [Arryid3 objectAtIndex:row]];
+        NSLog(@"%@", sndid3);
+        
         
     }
     
@@ -872,9 +1306,13 @@ component
         //        NSLog(@"data3.......%@",data3);
         
         holddata = [arry objectAtIndex:row];
+        //        Latitude = [latArray objectAtIndex:row];
+        //        Longitude = [longArray objectAtIndex:row];
         
         
-        NSLog(@"pickerarry...%@",holddata);
+        
+        // NSLog(@"pickerarry...%@<<<<<<<<<%@",Latitude,Longitude);
+        
         
         
     }
@@ -1008,7 +1446,12 @@ component
  
  return nil;
  }
+ 
  */
+
+
+
+
 
 - (IBAction)done:(id)sender
 {
@@ -1044,20 +1487,42 @@ component
     }
     else if (btntag==10)
     {
+        //        [dict setObject:Latitude forKey:@"Latitude"];
+        //        [dict setObject:Longitude forKey:@"Longitude"];
+        
+        
+        NSLog(@"dict===============>%@",dict);
         
         pickarry= [holddata componentsSeparatedByString:@","] ;
         
-        addresslbl.text = [pickarry objectAtIndex:0];
+        if (pickarry.count>0)
+        {
+            
+            for (int i=0;  i<pickarry.count; i++)
+            {
+                if (i==0)
+                {
+                    addresslbl.text = [pickarry objectAtIndex:i];
+                }
+                
+                if (i==pickarry.count-2)
+                {
+                    townlbl.text=[pickarry objectAtIndex:i];
+                }
+                
+                if (i==pickarry.count-1)
+                {
+                    countylbl.text= [pickarry objectAtIndex:i];
+                }
+                
+                pincodelbl.text =_picCodesrch.text;
+            }
+            
+        }
         
         
         
-        townlbl.text=[pickarry objectAtIndex:1];
         
-        countylbl.text= [pickarry objectAtIndex:2];
-        
-        
-        
-        // arry = [[NSMutableArray alloc]init];
         
         
     }
@@ -1128,6 +1593,8 @@ component
     btn6.hidden=NO;
     
     textField.autocorrectionType = UITextAutocorrectionTypeNo;
+    
+    textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     pview.hidden=YES;
     myPickerView.hidden=YES;
     return YES;
@@ -1145,11 +1612,9 @@ component
     btn4.hidden=NO;
     btn5.hidden=NO;
     btn6.hidden=NO;
+    textView.autocorrectionType = UITextAutocorrectionTypeNo;
     
-    if (textView==propertysummary)
-    {
-        propertysumrylbl.hidden=YES;
-    }
+    
     if (textView==propertyfulldescription)
     {
         propertydescriptionlbl.hidden=YES;
@@ -1160,8 +1625,27 @@ component
         
         pt=rc.origin;
         pt.x=0;
-        pt.y=600;
+        pt.y=500;
         [_mainscroll setContentOffset:pt animated:YES];
+    }
+    if (textView ==propertysummary)
+    {
+        propertysumrylbl.hidden=YES;
+        CGRect screenBounds=[[UIScreen mainScreen] bounds];
+        if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
+        {
+            [self.mainscroll setContentOffset:CGPointMake(0.0f, 390.0f) animated:YES];
+        }
+        else if (screenBounds.size.height == 667  && screenBounds.size.width == 375)
+        {
+            [self.mainscroll setContentOffset:CGPointMake(0.0f, 300.0f) animated:YES];
+        }
+        else
+        {
+            
+            [self.mainscroll setContentOffset:CGPointMake(0.0f, 220.0f) animated:YES];
+        }
+        
     }
     
     
@@ -1171,34 +1655,42 @@ component
 
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    textView.autocorrectionType = UITextAutocorrectionTypeNo;
     if ([text isEqualToString:@"\n"])
     {
+        if (textView ==propertyfulldescription) {
+            CGRect screenBounds=[[UIScreen mainScreen] bounds];
+            if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
+            {
+                [self.mainscroll setContentOffset:CGPointMake(0.0f, 414.0f) animated:YES];
+            }
+            else if (screenBounds.size.height == 667  && screenBounds.size.width == 375)
+            {
+                [self.mainscroll setContentOffset:CGPointMake(0.0f, 315.0f) animated:YES];
+            }
+            else
+            {
+                
+                [self.mainscroll setContentOffset:CGPointMake(0.0f, 245.0f) animated:YES];
+            }
+            
+        }
+        
+        
+        
+        
         [textView resignFirstResponder];
-        // [self.mainscroll setContentOffset:CGPointMake(0.0f, 0.0f) animated:YES];
+        
         if (textView.text.length==0)
         {
             propertysumrylbl.hidden=NO;
             propertydescriptionlbl.hidden = NO;
         }
         
-        if ([propertyfulldescription.text isEqualToString:@"\n"]) {
-            
-            CGPoint pt;
-            
-            CGRect rc=[_mainscroll bounds];
-            rc=[_mainscroll convertRect:rc toView:_mainscroll];
-            
-            pt=rc.origin;
-            pt.x=0;
-            pt.y=922;
-            [_mainscroll setContentOffset:pt animated:YES];
-            
-        }
     }
     
     return YES;
 }
-
 
 
 

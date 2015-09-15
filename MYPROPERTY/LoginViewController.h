@@ -14,8 +14,12 @@
 
 
 {
+    __weak IBOutlet UIButton *loginbtn;
+    IBOutlet UIActivityIndicatorView *spinner;
     FW_JsonClass *obj;
     NSUserDefaults *userinfo;
+     BOOL check;
+    IBOutlet UIView *spinnerview;
 }
 @property (strong, nonatomic) IBOutlet UITextField *emailtext;
 @property (strong, nonatomic) IBOutlet UITextField *passwordtext;
@@ -26,6 +30,7 @@
 @property (strong ,nonatomic) NSMutableArray *Arry1;
 @property (strong,nonatomic) NSString *userid;
 - (IBAction)clickLogin:(id)sender;
+- (IBAction)forgotbtnTap:(id)sender;
 
 
 @end

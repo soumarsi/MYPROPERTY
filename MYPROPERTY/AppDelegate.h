@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "Reachability.h"
+#import <SystemConfiguration/SystemConfiguration.h>
 //#import <Fabric/Fabric.h>
 //#import <TwitterKit/TwitterKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
@@ -25,6 +27,6 @@
 -(void)openActiveSessionWithPermissions:(NSArray *)permissions allowLoginUI:(BOOL)allowLoginUI;
 
 
-@property (strong, nonatomic) UINavigationController *navigationController;
+//@property (strong, nonatomic) UINavigationController *navigationController;
 @end
 

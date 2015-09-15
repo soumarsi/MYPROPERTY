@@ -11,7 +11,7 @@
 
 @interface AddadvertisementViewController : UIViewController
 {
-     FW_JsonClass *obj;
+    FW_JsonClass *obj;
     
 }
 @property (strong,nonatomic) NSString *chkdata;
@@ -48,5 +48,14 @@
 - (IBAction)saleofpropertybutton:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *saleofpropertybutton;
 @property (strong, nonatomic) IBOutlet UILabel *pagetitle;
+
+@property (strong , nonatomic) NSString * mypropertyRent;
+@property (strong , nonatomic) NSString * mypropertySell;
+@property (strong , nonatomic) NSString * editforRent;
+@property (strong , nonatomic) NSString * editforSell;
+
+
+@property (strong,nonatomic) NSString *property_id;
+@property (strong,nonatomic) NSString *advert_id;
 
 @end

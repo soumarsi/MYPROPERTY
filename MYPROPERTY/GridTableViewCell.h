@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface GridTableViewCell : UITableViewCell
-
+@property (strong, nonatomic) IBOutlet UILabel *titlelabel;
+@property (strong, nonatomic) IBOutlet UILabel *bedroomslabel;
+@property (strong, nonatomic) IBOutlet UILabel *pricelabel;
+@property (strong, nonatomic) IBOutlet UIButton *booknow;
+@property (strong, nonatomic) IBOutlet UIImageView *addToFavImg;
+@property (strong, nonatomic) IBOutlet UIButton *addToFavBtn;
+@property (strong, nonatomic) IBOutlet UIImageView *homepicture;
 @end

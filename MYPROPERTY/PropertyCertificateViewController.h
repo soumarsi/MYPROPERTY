@@ -9,12 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "FW_JsonClass.h"
 #import "MPDashBoardViewController.h"
+#import "AFNetworking.h"
+#import "MPMyPropertyViewController.h"
+#import "ImageResize.h"
 
 @interface PropertyCertificateViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UITextFieldDelegate>
 {
     
     IBOutlet UIScrollView *scroll;
     int check;
+    NSString *uesrid;
     
     UIView *myview;
     
@@ -51,10 +55,20 @@
     
     IBOutlet UIButton *data3btn;
     IBOutlet UIButton *data2btn;
+    NSMutableData *mutableData;
+    NSMutableArray *trucksArray;
     
     
-    NSString *uesrid;
+    
+    NSData *imageData5,*imageData6,*imageData7,*imageData8;
+    
+    
+    
+    int scr;
+    
 }
+
+
 @property (strong ,nonatomic) UIImagePickerController *imagePicker;
 
 
@@ -73,7 +87,10 @@
 - (IBAction)upldbtn4:(id)sender;
 
 
-@property(strong,nonatomic)NSMutableDictionary *firstpagedata,*secondpagedata ,*thirdpagedata;
-
+@property(strong,nonatomic)NSMutableDictionary *firstpagedata,*thirdpagedata;
+@property (strong ,nonatomic) NSMutableArray *secondpagedata;
+//@property (strong,nonatomic) NSMutableArray *thirdpageimagearry;
+@property (strong,nonatomic)NSString *secondpagevideocode;
+@property (strong,nonatomic)NSData *imgdata1,*imgdata2,*imgdata3,*imgdata4,*imgdata5;
 
 @end

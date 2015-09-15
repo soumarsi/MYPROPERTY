@@ -7,6 +7,7 @@
 //
 #import "SearchViewController.h"
 #import "Listing0ViewController.h"
+#import "MPRegisterPropertyViewController.h"
 
 @interface SearchViewController ()
 
@@ -19,6 +20,7 @@
     // Do any additional setup after loading the view.
     
     [self labelCorrection];
+    check =@"srch";
     
 }
 
@@ -68,10 +70,32 @@
     
     
 }
+- (IBAction)buyMeTapped:(id)sender
+{
+    Listing0ViewController *list = (Listing0ViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"list0"];
+    list.srchtype=@"S";
+    
+    list.check=check;
+    
+    [self.navigationController pushViewController:list animated:YES];
+}
+- (IBAction)rentMeTpped:(id)sender
+{
+    Listing0ViewController *list = (Listing0ViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"list0"];
+    list.srchtype=@"R";
+    list.check=check;
+    
+    [self.navigationController pushViewController:list animated:YES];
+}
+- (IBAction)letMeTapped:(id)sender
+{
+    MPRegisterPropertyViewController *list = (MPRegisterPropertyViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"registerproperty"];
+    [self.navigationController pushViewController:list animated:YES];
+}
 
 - (IBAction)saleTapped:(id)sender
 {
-    Listing0ViewController *list = (Listing0ViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"list0"];
+    MPRegisterPropertyViewController *list = (MPRegisterPropertyViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"registerproperty"];
     [self.navigationController pushViewController:list animated:YES];
 }
 

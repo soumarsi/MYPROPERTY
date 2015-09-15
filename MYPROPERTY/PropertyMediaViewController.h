@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PropertyCertificateViewController.h"
+#import "ImageResize.h"
 
 @interface PropertyMediaViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UIActionSheetDelegate>
 {
@@ -19,6 +20,7 @@
     IBOutlet UIImageView *imageview4;
     IBOutlet UIImageView *imageview5;
     IBOutlet UITextField *codetxt;
+    
     UIImage *img1 ;
     UIImage *img2 ;
     UIImage *img3 ;
@@ -26,6 +28,8 @@
     UIImage *img5 ;
     
     int i;
+    //NSInteger j ;
+    int check;
 }
 
 @property (strong ,nonatomic) UIImagePickerController *imagePicker;
@@ -36,10 +40,11 @@
 - (IBAction)upldbtn4:(id)sender;
 - (IBAction)upldbtn5:(id)sender;
 - (IBAction)nextbtn:(id)sender;
-- (IBAction)cambtn1:(id)sender;
 
 
-@property(strong,nonatomic)NSMutableDictionary *firstdic, *dic;
+
+@property(strong,nonatomic)NSMutableDictionary *firstdic;
+@property (strong,nonatomic)NSMutableArray *dic;
 
 
 

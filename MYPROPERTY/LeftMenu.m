@@ -29,7 +29,17 @@
     return self;
 }
 
-- (IBAction)myDashboard:(id)sender
+- (IBAction)alertsTapped:(id)sender
+{
+    NSLog(@"sender=%ld",(long)sender);
+    [leftDelegate leftclk:sender];
+}
+- (IBAction)myPropertyTapped:(id)sender
+{
+    NSLog(@"sender=%ld",(long)sender);
+    [leftDelegate leftclk:sender];
+}
+- (IBAction)myAddTapped:(id)sender
 {
     NSLog(@"sender=%ld",(long)sender);
     [leftDelegate leftclk:sender];

@@ -8,8 +8,15 @@
 
 #import "ViewController.h"
 #import "FavouriteTableViewCell.h"
+#import "GridefavouriteTableViewCell.h"
+#import "FW_JsonClass.h"
 
 @interface FavouriteViewController : ViewController<UITableViewDataSource,UITableViewDelegate>
+{
+    FavouriteTableViewCell *cell1;
+    GridefavouriteTableViewCell *cell2;
+}
+
 @property (strong, nonatomic) IBOutlet UITableView *tableviewfevourite;
 - (IBAction)grideviewbutton:(id)sender;
 

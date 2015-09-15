@@ -10,6 +10,12 @@
 #import "Footer.h"
 
 @interface QFProfileViewController ()<footerdelegate>
+{
+    IBOutlet UIButton *bkbtn;
+    IBOutlet UILabel *toplbl;
+    IBOutlet UIImageView *topbar;
+    
+}
 
 @end
 
@@ -23,14 +29,61 @@
     [pview addSubview:picker];
     [self.view addSubview:pview];
     
+    userid = [[NSUserDefaults standardUserDefaults] objectForKey:@"id"];
+    
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"country"]!=NULL)
+    {
+        countrylbl.text =[[NSUserDefaults standardUserDefaults] objectForKey:@"country"];
+    }
+    else
+    {
+        countrylbl.text =@"Country";
+    }
+    
+    
     CGRect screenBounds=[[UIScreen mainScreen] bounds];
     if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
         
     {
         pview.frame = CGRectMake(0, 390, 320, 200);
+        toplbl.frame =CGRectMake(60, 23, 221, 35);
+        scrollView.frame=CGRectMake(0, 60, 320,568);
+        [scrollView setContentSize:CGSizeMake(self.view.frame.size.width, 790)];
         
     }
-    [scrollView setContentSize:CGSizeMake(self.view.frame.size.width, 710)];
+    
+    
+    
+    
+    else  if (screenBounds.size.height == 667  && screenBounds.size.width == 375)
+    {
+        
+        
+        topbar.frame=CGRectMake(0, 0, 375, 70);
+        bkbtn.frame = CGRectMake(0, 0, 66, 70);
+        toplbl.frame =CGRectMake(80, 30, 221, 25);
+        scrollView.frame=CGRectMake(0, 70, 375,667);
+        [scrollView setContentSize:CGSizeMake(self.view.frame.size.width, 800)];
+        
+        
+    }
+    else if (screenBounds.size.height ==736  && screenBounds.size.width == 414)
+    {
+        topbar.frame=CGRectMake(0, 0, 414, 78);
+        bkbtn.frame = CGRectMake(0, 0, 66, 78);
+        toplbl.frame =CGRectMake(80, 30, 221, 25);
+        pview.frame = CGRectMake(0, 500, 414, 300);
+        
+        scrollView.frame=CGRectMake(0, 78, 414,736);
+        [scrollView setContentSize:CGSizeMake(self.view.frame.size.width, 800)];
+        
+    }
+    
+    [scrollView setShowsHorizontalScrollIndicator:NO];
+    [scrollView setShowsVerticalScrollIndicator:NO];
+    
+    // [scrollView setContentSize:CGSizeMake(self.view.frame.size.width, 710)];
     //}
     //    else if (screenBounds.size.height == 667   && screenBounds.size.width == 375)
     //    {
@@ -46,6 +99,7 @@
     self.navigationController.navigationBarHidden = YES;
     updatebtn.layer.cornerRadius=3;
     _addresstextview.delegate = self;
+    _addresstextview.autocorrectionType = UITextAutocorrectionTypeNo;
     scrollView.delegate=self;
     obj = [[FW_JsonClass alloc]init];
     Footer *footer=[[Footer alloc]init];
@@ -55,12 +109,22 @@
     //phonenoUpdate.text = [[NSUserDefaults standardUserDefaults]objectForKey:@""];
     userid = [[NSUserDefaults standardUserDefaults] objectForKey:@"id"];
     namelbl.text=[[NSUserDefaults standardUserDefaults] objectForKey:@"user_nicename"];
+    phonenoUpdate.text=[[NSUserDefaults standardUserDefaults] objectForKey:@"phone"];
     pincodetext.text =[[NSUserDefaults standardUserDefaults] objectForKey:@"post_code"];
     towntxt.text =[[NSUserDefaults standardUserDefaults] objectForKey:@"town"];
-    countrylbl.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"country"];
+    
+    
+    
     _addresstextview.text =[[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
     
     //    [footer setFrame:CGRectMake(0, self.view.frame.size.height - 60, self.view.frame.size.width, 60)];
+    
+    addresslbl.hidden=NO;
+    
+    if (_addresstextview.text.length>0)
+    {
+        addresslbl.hidden=YES;
+    }
     
     footer.footerdelegate=self;
     [footer TapCheck:5];
@@ -88,78 +152,198 @@
  }
  */
 
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+-(void)textViewDidBeginEditing:(UITextView *)textView
 {
+    
+    
+    
+    
     pview.hidden=YES;
     picker.hidden=YES;
-    textView.autocorrectionType = UITextAutocorrectionTypeNo;
+    scrollView.scrollEnabled = YES;
+    // textView.autocorrectionType = UITextAutocorrectionTypeNo;
     
-    if (textView==_addresstextview) {
+    
+    addresslbl.hidden=YES;
+    
+    CGRect screenBounds=[[UIScreen mainScreen] bounds];
+    
+    if (screenBounds.size.height == 736  && screenBounds.size.width == 414)
+    {
         
-        addresslbl.hidden=YES;
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.25];
-        self.view.frame=CGRectMake(0, -170, self.view.bounds.size.width, self.view.bounds.size.height);
-        [UIView commitAnimations];
+        [scrollView setContentOffset:CGPointMake(0.0f, 100.0f) animated:YES];
+        
         
     }
-    return  YES;
+    
+    else
+    {
+        
+        [scrollView setContentOffset:CGPointMake(0.0f, 200.0f) animated:YES];
+        
+        
+    }
+    
+    
+    
 }
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     pview.hidden=YES;
     picker.hidden=YES;
+    textField.autocorrectionType = UITextAutocorrectionTypeNo;
+    textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+    
+    CGRect screenBounds=[[UIScreen mainScreen] bounds];
+    
     
     if (textField ==phonenoUpdate)
     {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.25];
-        self.view.frame=CGRectMake(0, -90, self.view.bounds.size.width, self.view.bounds.size.height);
-        [UIView commitAnimations];
-        return YES;
+        
+        if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
+            
+        {
+            [scrollView setContentOffset:CGPointMake(0.0f, 90.0f) animated:YES];
+            
+        }
+        
+        else if(screenBounds.size.height == 667  && screenBounds.size.width == 375)
+            
+        {
+            
+            [scrollView setContentOffset:CGPointMake(0.0f, 90.0f) animated:YES];
+            
+            
+        }
+        else if (screenBounds.size.height == 736  && screenBounds.size.width == 414)
+        {
+            
+            
+            
+            
+        }
+        
+        
+        
+        
     }
-    else if (textField ==nameUpdate)
+    if (textField ==nameUpdate)
     {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.25];
-        self.view.frame=CGRectMake(0, -20, self.view.bounds.size.width, self.view.bounds.size.height);
-        [UIView commitAnimations];
-        return YES;
+        if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
+            
+        {
+            [scrollView setContentOffset:CGPointMake(0.0f, 20.0f) animated:YES];
+            
+        }
+        
+        else if(screenBounds.size.height == 667  && screenBounds.size.width == 375)
+            
+        {
+            [scrollView setContentOffset:CGPointMake(0.0f, 20.0f) animated:YES];
+            
+            
+        }
+        else if (screenBounds.size.height == 736  && screenBounds.size.width == 414)
+        {
+            
+            
+            
+            
+        }
+        
+        
+        
+        
+        
     }
     
     
-    else if (textField ==emailUpdate)
+    if (textField ==emailUpdate)
     {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.25];
-        self.view.frame=CGRectMake(0,-60, self.view.bounds.size.width, self.view.bounds.size.height);
-        [UIView commitAnimations];
-        return YES;
+        if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
+            
+        {
+            [scrollView setContentOffset:CGPointMake(0.0f, 70.0f) animated:YES];
+            
+        }
+        
+        else if(screenBounds.size.height == 667  && screenBounds.size.width == 375)
+            
+        {
+            
+            [scrollView setContentOffset:CGPointMake(0.0f, 70.0f) animated:YES];
+            
+        }
+        else if (screenBounds.size.height == 736  && screenBounds.size.width == 414)
+        {
+            
+            
+            
+            
+        }
+        
+        
+        
+        
     }
     
-    else if (textField== pincodetext)
+    if (textField== pincodetext)
     {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.25];
-        self.view.frame=CGRectMake(0,-200, self.view.bounds.size.width, self.view.bounds.size.height);
-        [UIView commitAnimations];
-        return YES;
+        if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
+            
+        {
+            [scrollView setContentOffset:CGPointMake(0.0f, 360.0f) animated:YES];
+            
+        }
+        
+        else if(screenBounds.size.height == 667  && screenBounds.size.width == 375)
+            
+        {
+            
+            [scrollView setContentOffset:CGPointMake(0.0f, 360.0f) animated:YES];
+            
+        }
+        else if (screenBounds.size.height == 736  && screenBounds.size.width == 414)
+        {
+            
+            
+            [scrollView setContentOffset:CGPointMake(0.0f, 260.0f) animated:YES];
+            
+        }
+        
+        
+        
     }
     
-    else if (textField == towntxt)
+    if (textField == towntxt)
     {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.25];
-        self.view.frame=CGRectMake(0,-180, self.view.bounds.size.width, self.view.bounds.size.height);
-        [UIView commitAnimations];
-        return YES;
+        if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
+            
+        {
+            [scrollView setContentOffset:CGPointMake(0.0f, 260.0f) animated:YES];
+            
+        }
+        
+        else if(screenBounds.size.height == 667  && screenBounds.size.width == 375)
+            
+        {
+            
+            [scrollView setContentOffset:CGPointMake(0.0f, 260.0f) animated:YES];
+            
+        }
+        else if (screenBounds.size.height == 736  && screenBounds.size.width == 414)
+        {
+            
+            
+            [scrollView setContentOffset:CGPointMake(0.0f, 160.0f) animated:YES];
+            
+        }
+        
+        
     }
-    else
-    {
-        return YES;
-    }
-    return nil;
+    
+    return YES;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -168,15 +352,46 @@
     if ([text isEqualToString:@"\n"])
     {
         
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.25];
-        self.view.frame=CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
-        [UIView commitAnimations];
+        
+        CGRect screenBounds=[[UIScreen mainScreen] bounds];
+        if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
+            
+        {
+            [scrollView setContentOffset:CGPointMake(0.0f, 225.0f) animated:YES];
+            
+        }
+        
+        else if(screenBounds.size.height == 667  && screenBounds.size.width == 375)
+            
+        {
+            
+            [scrollView setContentOffset:CGPointMake(0.0f, 150.0f) animated:YES];
+            
+        }
+        else if (screenBounds.size.height == 736  && screenBounds.size.width == 414)
+        {
+            
+            [scrollView setContentOffset:CGPointMake(0.0f, 78.0f) animated:YES];
+            
+            
+        }
+        
+        if (textView.text.length==0)
+        {
+            addresslbl.hidden=NO;
+            
+            
+        }
+        
+        
+        
+        
         
         [textView resignFirstResponder];
         return YES;
         
     }
+    
     
     
     return YES;
@@ -187,22 +402,71 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     textField.autocorrectionType = UITextAutocorrectionTypeNo;
-    if (textField ==phonenoUpdate)
-    {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.25];
-        self.view.frame=CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
-        [UIView commitAnimations];
-    }
-    else
-    {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.25];
-        self.view.frame=CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
-        [UIView commitAnimations];
-    }
-    [textField resignFirstResponder];
     
+    if (_addresstextview.text.length==0)
+    {
+        addresslbl.hidden=NO;
+        
+        
+    }
+    
+    CGRect screenBounds=[[UIScreen mainScreen] bounds];
+    if (textField ==pincodetext)
+    {
+        
+        if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
+            
+        {
+            [scrollView setContentOffset:CGPointMake(0.0f, 225.0f) animated:YES];
+            
+        }
+        
+        else if(screenBounds.size.height == 667  && screenBounds.size.width == 375)
+            
+        {
+            
+            [scrollView setContentOffset:CGPointMake(0.0f, 150.0f) animated:YES];
+            
+        }
+        else if (screenBounds.size.height == 736  && screenBounds.size.width == 414)
+        {
+            
+            [scrollView setContentOffset:CGPointMake(0.0f, 78.0f) animated:YES];
+            
+            
+        }
+        
+        
+        
+    }
+    
+    if (textField ==towntxt)
+    {
+        if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
+            
+        {
+            [scrollView setContentOffset:CGPointMake(0.0f, 225.0f) animated:YES];
+            
+        }
+        
+        else if(screenBounds.size.height == 667  && screenBounds.size.width == 375)
+            
+        {
+            
+            [scrollView setContentOffset:CGPointMake(0.0f, 150.0f) animated:YES];
+            
+        }
+        else if (screenBounds.size.height == 736  && screenBounds.size.width == 414)
+        {
+            
+            [scrollView setContentOffset:CGPointMake(0.0f, 78.0f) animated:YES];
+            
+            
+        }
+    }
+    
+    [textField resignFirstResponder];
+    scrollView.scrollEnabled = YES;
     
     return YES;
 }
@@ -214,22 +478,62 @@
     
     countrylbl.text= holedata;
     
+    
     pview.hidden=YES;
     picker.hidden=YES;
     scrollView.scrollEnabled = YES;
-    CGRect rc=[scrollView bounds];
-    rc=[scrollView convertRect:rc toView:scrollView];
-    CGPoint pt;
-    pt=rc.origin;
-    pt.x=0;
-    pt.y=0;
+    CGRect screenBounds=[[UIScreen mainScreen] bounds];
+    if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
+        
+    {
+        CGRect rc=[scrollView bounds];
+        rc=[scrollView convertRect:rc toView:scrollView];
+        CGPoint pt;
+        pt=rc.origin;
+        pt.x=0;
+        pt.y=200;
+        
+        [scrollView setContentOffset:pt animated:YES];
+        
+    }
     
-    [scrollView setContentOffset:pt animated:YES];
+    else if(screenBounds.size.height == 667  && screenBounds.size.width == 375)
+        
+    {
+        
+        
+        CGRect rc=[scrollView bounds];
+        rc=[scrollView convertRect:rc toView:scrollView];
+        CGPoint pt;
+        pt=rc.origin;
+        pt.x=0;
+        pt.y=100;
+        
+        [scrollView setContentOffset:pt animated:YES];
+    }
+    else if (screenBounds.size.height == 736  && screenBounds.size.width == 414)
+    {
+        
+        CGRect rc=[scrollView bounds];
+        rc=[scrollView convertRect:rc toView:scrollView];
+        CGPoint pt;
+        pt=rc.origin;
+        pt.x=0;
+        pt.y=78;
+        
+        [scrollView setContentOffset:pt animated:YES];
+        
+        
+    }
     
 }
 
 - (IBAction)countryBtn:(id)sender
 {
+    pview.hidden=YES;
+    picker.hidden=YES;
+    
+    countrybtn.hidden=YES;
     [phonenoUpdate resignFirstResponder];
     [nameUpdate resignFirstResponder];
     [towntxt resignFirstResponder];
@@ -244,7 +548,7 @@
     
     
     NSString *curl = [NSString stringWithFormat:@"http://esolzdemos.com/lab1/countries-object-array.json"];
-    
+    countrylbl.text=@"Loading Countrys.....";
     
     [obj GlobalDict:curl Globalstr:@"array" Withblock:^(id result, NSError *error)
      {
@@ -257,6 +561,7 @@
          
          if (countryArry.count!=0) {
              
+             countrylbl.text = @"Choose Country";
              pview.hidden=NO;
              picker.hidden=NO;
              CGRect screenBounds=[[UIScreen mainScreen] bounds];
@@ -284,7 +589,7 @@
                  CGPoint pt;
                  pt=rc.origin;
                  pt.x=0;
-                 pt.y=175;
+                 pt.y=210;
                  
                  [scrollView setContentOffset:pt animated:YES];
              }
@@ -296,7 +601,7 @@
                  CGPoint pt;
                  pt=rc.origin;
                  pt.x=0;
-                 pt.y=200;
+                 pt.y=260;
                  
                  [scrollView setContentOffset:pt animated:YES];
                  
@@ -315,6 +620,16 @@
                  
              }
              scrollView.scrollEnabled = NO;
+             countrybtn.hidden=NO;
+         }
+         else
+         {
+             countrylbl.text =@"Select Country";
+             countrybtn.hidden = NO;
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Faild"   message:@"Country Loading Faild"   delegate:self cancelButtonTitle:@"OK"  otherButtonTitles:nil];
+             
+             
+             [alert show];
          }
      }];
     
@@ -326,6 +641,7 @@
       inComponent:(NSInteger)component
 {
     
+    // countrylbl.text=countryArry[0];
     holedata = [[NSString alloc] initWithFormat:
                 @"%@", [countryArry objectAtIndex:row]];
     NSLog(@"%@", holedata);
@@ -338,14 +654,50 @@
     pview.hidden=YES;
     picker.hidden=YES;
     scrollView.scrollEnabled = YES;
-    CGRect rc=[scrollView bounds];
-    rc=[scrollView convertRect:rc toView:scrollView];
-    CGPoint pt;
-    pt=rc.origin;
-    pt.x=0;
-    pt.y=0;
+    CGRect screenBounds=[[UIScreen mainScreen] bounds];
+    if(screenBounds.size.height == 568  && screenBounds.size.width == 320)
+        
+    {
+        CGRect rc=[scrollView bounds];
+        rc=[scrollView convertRect:rc toView:scrollView];
+        CGPoint pt;
+        pt=rc.origin;
+        pt.x=0;
+        pt.y=200;
+        
+        [scrollView setContentOffset:pt animated:YES];
+        
+    }
     
-    [scrollView setContentOffset:pt animated:YES];
+    else if(screenBounds.size.height == 667  && screenBounds.size.width == 375)
+        
+    {
+        
+        
+        CGRect rc=[scrollView bounds];
+        rc=[scrollView convertRect:rc toView:scrollView];
+        CGPoint pt;
+        pt=rc.origin;
+        pt.x=0;
+        pt.y=100;
+        
+        [scrollView setContentOffset:pt animated:YES];
+    }
+    else if (screenBounds.size.height == 736  && screenBounds.size.width == 414)
+    {
+        
+        CGRect rc=[scrollView bounds];
+        rc=[scrollView convertRect:rc toView:scrollView];
+        CGPoint pt;
+        pt=rc.origin;
+        pt.x=0;
+        pt.y=78;
+        
+        [scrollView setContentOffset:pt animated:YES];
+        
+        
+    }
+    
     
     
 }
@@ -393,39 +745,186 @@
                  
                  
                  
+                 
                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[arry valueForKey:@"email_error"]
                                                                  message:@"Change mail id"
                                                                 delegate:self
                                                        cancelButtonTitle:@"Cancel"
                                                        otherButtonTitles:nil,nil];
-                 
                  [alert show];
+                 
+                 NSString *url1 = [NSString stringWithFormat:@"%@json_output.php?mode=profile_details&user_id=%@",App_Domain_Url,userid];
+                 
+                 NSString* encodedUrl = [url1 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                 
+                 [obj GlobalDict:encodedUrl Globalstr:@"array" Withblock:^(id result, NSError *error)
+                  
+                  {
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      //chng somthing
+                      
+                      // NSMutableArray *temp =[[NSMutableArray alloc]init];
+                      NSMutableArray *temp;
+                      
+                      temp= [result mutableCopy];
+                      
+                      [self resetDefaults];
+                      userinfo=[[NSUserDefaults alloc]init];
+                      
+                      NSLog(@"userdetails%@",temp);
+                      
+                      
+                      
+                      [userinfo setValue:[temp valueForKey:@"id"] forKey:@"id"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"user_email"] forKey:@"user_email"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"user_nicename"] forKey:@"user_nicename"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"user_registered"] forKey:@"user_registered"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"address"] forKey:@"address"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"country"] forKey:@"country"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"town"] forKey:@"town"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"post_code"] forKey:@"post_code"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"phone"] forKey:@"phone"];
+                      
+                      [userinfo synchronize];
+                      
+                      
+                      
+                      NSString *Value = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_nicename"];
+                      
+                      NSLog(@"userinfo-%@",Value);
+                      
+                      namelbl.text = [arry valueForKey:@"user_name"];
+                      nameUpdate.text = [arry valueForKey:@"user_name"];
+                      _addresstextview.text = [arry valueForKey:@"address"];
+                      emailUpdate.text = [arry valueForKey:@"user_email"];
+                      towntxt.text = [arry valueForKey:@"town"];
+                      phonenoUpdate.text = [arry valueForKey:@"phone"];
+                      countrylbl.text = [arry valueForKey:@"country"];
+                      pincodetext.text=[arry valueForKey:@"post_code"];
+                      
+                  }];
+                 
+                 
              }
              
              else
              {
+                 
+                 
+                 
+                 
                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                                  message:[arry valueForKey:@"msg"]
                                                                 delegate:self
                                                        cancelButtonTitle:@"Cancel"
                                                        otherButtonTitles:nil,nil];
                  [alert show];
+                 
+                 
+                 NSString *url1 = [NSString stringWithFormat:@"%@json_output.php?mode=profile_details&user_id=%@",App_Domain_Url,userid];
+                 
+                 NSString* encodedUrl = [url1 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                 
+                 [obj GlobalDict:encodedUrl Globalstr:@"array" Withblock:^(id result, NSError *error)
+                  
+                  {
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      //chng something
+                      
+                      // NSMutableArray *temp =[[NSMutableArray alloc]init];
+                      
+                      
+                      NSMutableArray *temp;
+                      temp= [result mutableCopy];
+                      
+                      [self resetDefaults];
+                      userinfo=[[NSUserDefaults alloc]init];
+                      
+                      NSLog(@"userdetails%@",temp);
+                      
+                      
+                      
+                      [userinfo setValue:[temp valueForKey:@"id"] forKey:@"id"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"user_email"] forKey:@"user_email"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"user_nicename"] forKey:@"user_nicename"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"user_registered"] forKey:@"user_registered"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"address"] forKey:@"address"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"country"] forKey:@"country"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"town"] forKey:@"town"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"post_code"] forKey:@"post_code"];
+                      
+                      [userinfo setValue:[temp valueForKey:@"phone"] forKey:@"phone"];
+                      
+                      [userinfo synchronize];
+                      
+                      
+                      
+                      NSString *Value = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_nicename"];
+                      
+                      NSLog(@"userinfo-%@",Value);
+                      
+                      namelbl.text = [arry valueForKey:@"user_name"];
+                      nameUpdate.text = [arry valueForKey:@"user_name"];
+                      _addresstextview.text = [arry valueForKey:@"address"];
+                      emailUpdate.text = [arry valueForKey:@"user_email"];
+                      towntxt.text = [arry valueForKey:@"town"];
+                      phonenoUpdate.text = [arry valueForKey:@"phone"];
+                      countrylbl.text = [arry valueForKey:@"country"];
+                      pincodetext.text=[arry valueForKey:@"post_code"];
+                      
+                  }];
+                 
+                 
+                 
+                 
+                 
              }
              
              
-             namelbl.text = [arry valueForKey:@"user_name"];
-             nameUpdate.text = [arry valueForKey:@"user_name"];
-             _addresstextview.text = [arry valueForKey:@"address"];
-             emailUpdate.text = [arry valueForKey:@"user_email"];
-             towntxt.text = [arry valueForKey:@"town"];
-             phonenoUpdate.text = [arry valueForKey:@"phone"];
-             countrylbl.text = [arry valueForKey:@"country"];
-             pincodetext.text=[arry valueForKey:@"post_code"];
+             
              
          }];
     }
     
 }
+
+- (void)resetDefaults {
+    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+    NSDictionary * dict = [defs dictionaryRepresentation];
+    for (id key in dict) {
+        [defs removeObjectForKey:key];
+    }
+    [defs synchronize];
+}
+
+
 -(NSString *)TarminateWhiteSpace:(NSString *)Str
 {
     NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
@@ -449,6 +948,7 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)
 component
 {
+    
     return countryArry[row];
 }
 

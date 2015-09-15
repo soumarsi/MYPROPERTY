@@ -26,7 +26,18 @@
     {
         self=[[[NSBundle mainBundle] loadNibNamed:@"RightMenu" owner:self options:nil]objectAtIndex:0];
     }
+//    userinfo=[[NSUserDefaults alloc]init];
+//    NSLog(@"username=%@",[userinfo objectForKey:@"user_nicename"]);
+    self.userName.text=[[NSUserDefaults standardUserDefaults] objectForKey:@"user_nicename"];
+
+    
+    
     return self;
+}
+
+- (IBAction)InviteFriendsTapped:(id)sender
+{
+    [rightDelegate rightclk:sender];
 }
 
 - (IBAction)editProfileTap:(id)sender

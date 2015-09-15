@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface FavouriteTableViewCell : UITableViewCell
+@property (strong, nonatomic) IBOutlet UILabel *addresslbl;
 @property (strong, nonatomic) IBOutlet UIImageView *homepicture;
 @property (strong, nonatomic) IBOutlet UILabel *titlelabel;
 @property (strong, nonatomic) IBOutlet UILabel *subtitle;
@@ -19,5 +20,6 @@
 @property (strong,nonatomic) IBOutlet UIButton *rentbutton;
 @property (strong, nonatomic) IBOutlet UIImageView *rowimage;
 @property (strong, nonatomic) IBOutlet UIImageView *rowimageview;
+@property (strong, nonatomic) IBOutlet UIButton *checkUncheckBtn;
 
 @end

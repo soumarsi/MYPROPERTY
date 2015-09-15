@@ -16,6 +16,11 @@
 {
     FW_JsonClass *obj;
     IBOutlet UIButton *signup;
+    
+    IBOutlet UIActivityIndicatorView *spinner;
+    
+    IBOutlet UIView *signupbtnview;
+    
 }
 
 - (IBAction)signupback:(id)sender;

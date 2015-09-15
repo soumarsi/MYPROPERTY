@@ -18,6 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     obj = [[FW_JsonClass alloc]init];
+    signupbtnview.hidden=YES;
     
     _titletextfield.delegate=self;
     _firstnametextfield.delegate=self;
@@ -55,6 +56,31 @@
     [UIView commitAnimations];
     
     return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+
+{
+    if ( [_passwordtextfield.text isEqualToString:@" "])
+    {
+        UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Sorry!"  message:@"Password Cannot content Space" delegate:self cancelButtonTitle:@"OK"   otherButtonTitles: nil];
+        
+        [alert show];
+    }
+    
+    
+    
+}
+
+
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0)
+    {
+        _passwordtextfield.text=@"";
+        _confirmpasswordtextfield.text=@"";
+    }
 }
 
 //- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
@@ -155,22 +181,35 @@
         _passwordtextfield.attributedPlaceholder=nn3;
         _confirmpasswordtextfield.attributedPlaceholder=nn3;
     }
+    
+    else if(![self isPasswordValid:_passwordtextfield.text] )
+    {
+        
+        _passwordtextfield.text=@"";
+        _confirmpasswordtextfield.text= @"";
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Faild" message:@"Minimum 6 characters and at least 1 Alphabet, 1 Number and 1 Special Character " delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil,nil];
+        [alert show];
+        
+    }
+    
     else
     {
+        signupbtnview.hidden=NO;
+        
         NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
         
         NSInteger day = [components day];
         NSInteger week = [components month];
         NSInteger year = [components year];
         
-        NSString *string = [NSString stringWithFormat:@"%ld.%ld.%ld",(long)year, (long)week, (long)day];
+        NSString *string = [NSString stringWithFormat:@"%ld-%ld-%ld",(long)year, (long)week, (long)day];
         NSLog(@"st%@",string);
         NSString *space=@"abc";
         NSString *url = [NSString stringWithFormat:@"%@json_output.php?mode=sign_up_via_email&user_name=%@&user_email=%@&user_password=%@&user_registered=%@&display_name=%@",App_Domain_Url,[_firstnametextfield text], [_emailtextfield text],[_passwordtextfield text],string,space];
         
+        NSString* encodedUrl = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         
-        
-        [obj GlobalDict:url Globalstr:@"array" Withblock:^(id result, NSError *error)
+        [obj GlobalDict:encodedUrl Globalstr:@"array" Withblock:^(id result, NSError *error)
          {
              
              _Arry1 =[[NSMutableArray alloc]init];
@@ -185,9 +224,13 @@
                  [self.navigationController pushViewController:srch animated:YES];
                  
                  
+                 
+                 
              }
              else
              {
+                 signupbtnview.hidden=YES;
+                 
                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Faild"
                                                                  message:[_Arry1 valueForKey:@"message"]
                                                                 delegate:self
@@ -204,6 +247,37 @@
     }
     
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField==_passwordtextfield || textField==_confirmpasswordtextfield  )
+    {
+        
+        
+        if ( [string isEqualToString:@" "])
+        {
+            UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Sorry!"  message:@"Password Cannot content Space" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            
+            [alert show];
+        }
+        
+        
+    }
+    
+    
+    if (textField==_emailtextfield) {
+        
+        if ( [string isEqualToString:@" "])
+        {
+            UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Sorry!"  message:@"Emailid Cannot content Space" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            
+            [alert show];
+            
+        }
+    }
+    return YES;
+}
+
 
 - (IBAction)loginbuttonpushfromsignup:(id)sender
 {
@@ -234,9 +308,48 @@
 
 
 
+//-(BOOL)passwordcheck:(NSString *)check
+//{
+//    NSCharacterSet *s = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890__$@$!%*?&"];
+//
+//   // NSString *myRegex = @"[A-Z0-9a-z_$@$!%*?&]*";
+//
+//
+//    NSPredicate *password = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", s];
+//    NSLog(@"check......%@",check);
+//    if (![password evaluateWithObject:check])
+//
+//    {
+//        return YES;
+//    }
+//    else
+//    {
+//        return NO;
+//    }
+//
+//}
 
-
-
+-(BOOL) isPasswordValid:(NSString *)pwd
+{
+    if ( [pwd length]<6 || [pwd length]>32 )
+        
+        return NO;
+    
+    NSRange rang; rang = [pwd rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
+    
+    if ( !rang.length )
+    {
+        return NO;
+    }
+    rang = [pwd rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]];
+    
+    if ( !rang.length )
+    {
+        return NO;
+    }
+    
+    return YES;
+}
 
 
 

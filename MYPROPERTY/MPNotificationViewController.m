@@ -20,6 +20,7 @@
 #import "SearchViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "MPRegisterPropertyViewController.h"
+#import "InviteFriendsViewController.h"
 
 
 @interface MPNotificationViewController () <UITableViewDataSource,UITabBarDelegate,footerdelegate,leftDelegate,rightDelegate,UIGestureRecognizerDelegate,UISearchBarDelegate>
@@ -104,7 +105,7 @@
             UITapGestureRecognizer *tapGestureRecognize = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelRightMenuByTap)];
              tapGestureRecognize.delegate = self;
              tapGestureRecognize.numberOfTapsRequired = 1;
-             [tapGestureRecognize requireGestureRecognizerToFail:tapGestureRecognize];
+             //[tapGestureRecognize requireGestureRecognizerToFail:tapGestureRecognize];
              [blackview addGestureRecognizer:tapGestureRecognize];
             
             UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(cancelRightMenu)];
@@ -250,7 +251,16 @@
     NSInteger tagId;
     tagId = sender.tag;
     NSLog(@"%ld",(long)tagId);
-    if ( tagId == 2 )
+    if (tagId == 1)
+    {
+        InviteFriendsViewController *pro = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"invite"];
+        [self.navigationController pushViewController:pro animated:YES];
+        [rightView removeFromSuperview];
+        [blackview removeFromSuperview];
+        rightslide = 0;
+        
+    }
+    else if ( tagId == 2 )
     {
         NSLog(@"tagid is: %ld",(long)tagId);
         QFProfileViewController *pro = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"profile"];

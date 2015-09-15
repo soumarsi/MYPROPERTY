@@ -105,6 +105,7 @@
 - (void)connection:(NSURLConnection*)connection didFailWithError:(NSError*)error
 {
     
+    //[[NSNotificationCenter defaultCenter] postNotificationName:@"no_internet" object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"no_internet" object:nil];
     
     NSLog(@"Did Fail");
@@ -114,7 +115,7 @@
     
     if ([check  isEqual: @"array"])
     {
-
+        
         
         id result=[NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:nil];
         NSLog(@"result-- %@", result);

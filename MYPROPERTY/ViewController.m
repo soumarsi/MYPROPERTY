@@ -27,6 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     username=[[NSString alloc]init];
     mailid=[[NSString alloc]init];
     date=[[NSString alloc]init];
@@ -80,6 +81,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SessionStateChangeNotification" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
@@ -257,13 +259,13 @@
         
         
     }
-    else{
+    //else{
         // Close an existing session.
-        [[FBSession activeSession] closeAndClearTokenInformation];
+        //[[FBSession activeSession] closeAndClearTokenInformation];
         
         // Update the UI.
-        NSLog(@"close of existing session");
-    }
+       // NSLog(@"close of existing session");
+    //}
 }
 
 - (IBAction)twitterloginbutton:(id)sender

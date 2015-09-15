@@ -19,6 +19,8 @@
 @implementation AppDelegate
 
 
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
@@ -33,6 +35,43 @@
     //        NSLog(@"%@",object);
     //
     //    }
+    
+    
+    NetworkStatus networkStatus = [[Reachability reachabilityForInternetConnection] currentReachabilityStatus];
+    if (networkStatus == NotReachable) {
+        
+        
+        
+        UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Network Unavailable"
+                                                         message:@"Check your Internet connection"
+                                                        delegate:self
+                                               cancelButtonTitle:@"OK"
+                                               otherButtonTitles: nil];
+        
+        [alert show];
+        
+        
+    }
+    NSInteger login = [[[NSUserDefaults standardUserDefaults] objectForKey:@"id"] integerValue];
+    if (login>0)
+    {
+        UIStoryboard *storyboard = self.window.rootViewController.storyboard;
+        UIViewController *rootController = [storyboard instantiateViewControllerWithIdentifier:@"searchView"];
+        
+        navigationController = [[UINavigationController alloc]
+                                initWithRootViewController:rootController];
+        [navigationController setNavigationBarHidden:YES animated:NO];
+        
+        self.window = [[UIWindow alloc]
+                       initWithFrame:[[UIScreen mainScreen] bounds]];
+        self.window.rootViewController=rootController;
+        [self.window addSubview:navigationController.view];
+    }
+    
+    
+    
+    
+    
     if ([FBSession activeSession].state == FBSessionStateCreatedTokenLoaded)
     {
         [self openActiveSessionWithPermissions:nil allowLoginUI:NO];
@@ -78,6 +117,30 @@
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
     return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    
+    if (buttonIndex == 0)
+    {
+        NetworkStatus networkStatus = [[Reachability reachabilityForInternetConnection] currentReachabilityStatus];
+        if (networkStatus == NotReachable) {
+            
+            
+            
+            UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Network Unavailable"
+                                                             message:@"Check your Internet connection"
+                                                            delegate:self
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles: nil];
+            
+            [alert show];
+            
+            
+        }
+        
+    }
 }
 
 -(void)openActiveSessionWithPermissions:(NSArray *)permissions allowLoginUI:(BOOL)allowLoginUI{
@@ -217,5 +280,22 @@
         }
     }
 }
+
+// Kausik jati.....
+//
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+//{
+//    NSLog(@"Remote Notification Recieved");
+//    UILocalNotification *notification = [[UILocalNotification alloc] init];
+//    notification.alertBody =  @"Looks like i got a notification - fetch thingy";
+//    [application presentLocalNotificationNow:notification];
+//    completionHandler(UIBackgroundFetchResultNewData);
+//
+//}
+
+
+
+
+
 
 @end

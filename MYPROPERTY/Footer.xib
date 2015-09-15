@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="QU0-xe-NPR" customClass="Footer">
+        <view contentMode="scaleToFill" id="7fX-x4-puM" customClass="Footer">
             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topbar" id="Jwm-7i-oOo">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topbar" id="PN0-hk-LDj">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9Yj-QZ-qdB">
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="idR-iQ-51A">
                     <rect key="frame" x="14" y="14" width="34" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="7">
@@ -22,10 +22,10 @@
                     </state>
                     <state key="selected" image="bottom-bar-icon3"/>
                     <connections>
-                        <action selector="homeTapped:" destination="QU0-xe-NPR" eventType="touchUpInside" id="skh-MZ-vqG"/>
+                        <action selector="homeTapped:" destination="7fX-x4-puM" eventType="touchUpInside" id="uZY-GT-a1A"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kOY-ur-YI3">
+                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="LCv-8g-zdC">
                     <rect key="frame" x="79" y="16" width="30" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="bottom-bar-icon1">
@@ -33,10 +33,10 @@
                     </state>
                     <state key="selected" image="bottom-bar-icon2"/>
                     <connections>
-                        <action selector="favouritesTapped:" destination="QU0-xe-NPR" eventType="touchUpInside" id="B6G-wB-wBi"/>
+                        <action selector="favouritesTapped:" destination="7fX-x4-puM" eventType="touchUpInside" id="RSS-6A-s6h"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gkf-Mg-3P2">
+                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WEV-tV-Wjo">
                     <rect key="frame" x="145" y="15" width="30" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="bottom-bar-icon4">
@@ -44,10 +44,10 @@
                     </state>
                     <state key="selected" image="bottom-bar-icon5"/>
                     <connections>
-                        <action selector="addTapped:" destination="QU0-xe-NPR" eventType="touchUpInside" id="kjf-Jv-dA8"/>
+                        <action selector="addTapped:" destination="7fX-x4-puM" eventType="touchUpInside" id="91E-m1-paG"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5Gh-gX-4iy">
+                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JTX-1k-db4">
                     <rect key="frame" x="212" y="15" width="30" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="footer4nonselect">
@@ -55,10 +55,10 @@
                     </state>
                     <state key="selected" image="bottom-bar-icon6"/>
                     <connections>
-                        <action selector="notificationTapped:" destination="QU0-xe-NPR" eventType="touchUpInside" id="8eI-6h-5T6"/>
+                        <action selector="notificationTapped:" destination="7fX-x4-puM" eventType="touchUpInside" id="K9p-XG-beH"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="e0p-sW-sJV">
+                <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZeJ-Wo-YZN">
                     <rect key="frame" x="274" y="15" width="30" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="footer5nonselect">
@@ -66,10 +66,10 @@
                     </state>
                     <state key="selected" image="footer5select"/>
                     <connections>
-                        <action selector="profileTapped:" destination="QU0-xe-NPR" eventType="touchUpInside" id="Xdb-vX-SZ3"/>
+                        <action selector="profileTapped:" destination="7fX-x4-puM" eventType="touchUpInside" id="no3-Ed-Qus"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2JN-Zt-aaO">
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dLR-Wr-XkE">
                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -77,10 +77,10 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="homeBigBtn:" destination="QU0-xe-NPR" eventType="touchUpInside" id="frY-sE-NEd"/>
+                        <action selector="homeBigBtn:" destination="7fX-x4-puM" eventType="touchUpInside" id="bC8-8q-OTO"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="FvE-Pr-F64">
+                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7EU-jw-qwm">
                     <rect key="frame" x="65" y="0.0" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -88,10 +88,10 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="favBigBtn:" destination="QU0-xe-NPR" eventType="touchUpInside" id="qxN-7S-Qlz"/>
+                        <action selector="favBigBtn:" destination="7fX-x4-puM" eventType="touchUpInside" id="jZN-2v-QUj"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8lJ-OC-lvv">
+                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="viu-lX-Fba">
                     <rect key="frame" x="130" y="0.0" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -99,10 +99,10 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="addBigBtn:" destination="QU0-xe-NPR" eventType="touchUpInside" id="e3C-m9-4Da"/>
+                        <action selector="addBigBtn:" destination="7fX-x4-puM" eventType="touchUpInside" id="mrS-4Y-Nah"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fQq-Sb-Owe">
+                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="tyw-nx-6cl">
                     <rect key="frame" x="195" y="0.0" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -110,10 +110,10 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="notiBigBtn:" destination="QU0-xe-NPR" eventType="touchUpInside" id="AQx-l6-MSL"/>
+                        <action selector="notiBigBtn:" destination="7fX-x4-puM" eventType="touchUpInside" id="eJN-h7-ghw"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nii-tx-5Fd">
+                <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xtp-7X-67y">
                     <rect key="frame" x="260" y="0.0" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -121,7 +121,7 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="menuBigBtn:" destination="QU0-xe-NPR" eventType="touchUpInside" id="6s3-s2-6DT"/>
+                        <action selector="menuBigBtn:" destination="7fX-x4-puM" eventType="touchUpInside" id="PWc-8M-X0Y"/>
                     </connections>
                 </button>
             </subviews>
@@ -131,11 +131,11 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="bell" destination="5Gh-gX-4iy" id="QLQ-vV-2Re"/>
-                <outlet property="home" destination="9Yj-QZ-qdB" id="J4f-MM-BfR"/>
-                <outlet property="love" destination="kOY-ur-YI3" id="T5G-x4-ILd"/>
-                <outlet property="man" destination="e0p-sW-sJV" id="BAN-CZ-fK9"/>
-                <outlet property="plus" destination="gkf-Mg-3P2" id="Prl-qV-TB0"/>
+                <outlet property="bell" destination="JTX-1k-db4" id="Pkh-c1-JTd"/>
+                <outlet property="home" destination="idR-iQ-51A" id="jTO-Jd-caS"/>
+                <outlet property="love" destination="LCv-8g-zdC" id="aW2-a0-ib0"/>
+                <outlet property="man" destination="ZeJ-Wo-YZN" id="RHL-02-bA0"/>
+                <outlet property="plus" destination="WEV-tV-Wjo" id="gRq-Hc-Wt0"/>
             </connections>
             <point key="canvasLocation" x="561" y="289"/>
         </view>
@@ -146,9 +146,9 @@
         <image name="bottom-bar-icon2" width="41" height="37"/>
         <image name="bottom-bar-icon3" width="45" height="38"/>
         <image name="bottom-bar-icon4" width="40" height="40"/>
-        <image name="bottom-bar-icon5" width="40" height="40"/>
+        <image name="bottom-bar-icon5" width="27" height="27"/>
         <image name="bottom-bar-icon6" width="38" height="39"/>
-        <image name="footer4nonselect" width="77" height="79"/>
+        <image name="footer4nonselect" width="38" height="39"/>
         <image name="footer5nonselect" width="39" height="39"/>
         <image name="footer5select" width="39" height="39"/>
         <image name="topbar" width="540" height="93"/>
